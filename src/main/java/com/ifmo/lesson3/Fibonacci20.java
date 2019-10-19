@@ -10,12 +10,20 @@ public class Fibonacci20 {
         int[] fibonacciNumbers = fibonacciNumbers();
 
         // TODO implement
+        for(int i : fibonacciNumbers)
+            System.out.print(i + " ");
     }
 
     public static int[] fibonacciNumbers() {
         // TODO implement
-
-        return new int[0];
+        int[] f = new int[20];
+        f[0] = 1;
+        f[1] = 1;
+        for(int i = 2; i<20; i++)
+        {
+            f[i] = f[i-2] + f[i-1];
+        }
+        return f;
     }
 
 }
