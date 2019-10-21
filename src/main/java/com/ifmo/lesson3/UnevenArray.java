@@ -8,13 +8,29 @@ public class UnevenArray {
      */
     public static void main(String[] args) {
         int[] unevenArray = unevenArray();
-
+        for(int i = 0; i<unevenArray.length; i++)
+        {
+            System.out.print(unevenArray[i] + " ");
+        }
         // TODO implement
+        System.out.print("\n");
+        int j = 49;
+        while(j > -1) {
+            System.out.print(unevenArray[j] + " ");
+            j--;
+        }
     }
 
     public static int[] unevenArray() {
         // TODO implement
+        int[] imas = new int[50];
+        int d = 1;
+        for(int i = 0; i<50; i++)
+        {
+            imas[i] = d;
+            d+=2;
+        }
+        return imas;
 
-        return new int[0];
     }
 }
