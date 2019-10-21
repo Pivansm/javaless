@@ -23,7 +23,20 @@ public class SquareEquation {
      */
     public static double[] squareEquationRoots(double a, double b, double c) {
         // TODO implement
+        double[] asru = new double[2];
+        double d = Math.pow(b, 2) - 4*a*c;
+        if (d > 0) {
+            asru[0] = -b + Math.sqrt(d);
+            asru[1] = -b - Math.sqrt(d);
 
-        return null;
+        } else if (d == 0) {
+            asru[0] = -b / 2 * a;
+            asru[1] = 0.00;
+
+        } else {
+            System.out.println("Корней нет");
+        }
+
+        return asru;
     }
 }
