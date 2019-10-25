@@ -99,11 +99,24 @@ public class Library {
         library.put(new Book("Stephen King", "Shining"), 2); // return true
         library.put(new Book("Stephen King", "Dark Tower"), 3); // return true
 
+        library.put(new Book("Tolstoy", "War and peace"), 6);
+        //System.out.print(library.toString());
         for(Map.Entry<Book, Integer> item : library.mBook.entrySet()){
 
             Book bookCur = item.getKey();
             int cntBook = item.getValue();
             System.out.printf("Book: autor %s  title: %s : count %s\n", bookCur.author, bookCur.title, cntBook);
         }
+
+        library.take(new Book("Stephen King", "Dark Tower"), 3);
+
+        for(Map.Entry<Book, Integer> item : library.mBook.entrySet()){
+
+            Book bookCur = item.getKey();
+            int cntBook = item.getValue();
+            System.out.printf("Book: autor %s  title: %s : count %s\n", bookCur.author, bookCur.title, cntBook);
+        }
+
+
     }
 }
