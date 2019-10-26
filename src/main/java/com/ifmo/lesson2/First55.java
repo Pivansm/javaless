@@ -8,7 +8,7 @@ public class First55 {
         // TODO implement
         int ntx = 1;
         System.out.print(ntx + " ");
-        for(int i = 0; i<55; i++)
+        for(int i = 0; i<54; i++)
         {
             ntx += 2;
             System.out.print(ntx + " ");

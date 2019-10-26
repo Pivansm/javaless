@@ -12,7 +12,7 @@ public class Fibonacci {
         int nxt2 = 1;
 
         System.out.print(nxt + " " + nxt + " ");
-        for(int i = 3; i<11; i++)
+        for(int i = 3; i<12; i++)
         {
             int fib = nxt + nxt2;
             System.out.print(fib + " ");

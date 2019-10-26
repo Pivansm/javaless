@@ -13,7 +13,7 @@ public class SymmetricClocks {
     public static int symmetricTimes() {
         // TODO implement
         int n = 0;
-        for(int i = 0; i<60; i++)
+        for(int i = 0; i<24; i++)
         {
             int p1 = i%10;
             int p2 = (i/10)%10;
@@ -29,7 +29,7 @@ public class SymmetricClocks {
                if(p1 == p4)
                    if(p2 == p3)
                    {
-                       //System.out.println(p2 + " " + p1 + " : " + p4 + " " + p3);
+                       System.out.println(p2 + " " + p1 + " : " + p4 + " " + p3);
                        n++;
                    }
            }

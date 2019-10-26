@@ -2,8 +2,8 @@ package com.ifmo.lesson5.snape;
 
 public class Rectangle extends Shape {
 
-    public double a;
-    public double b;
+    double a;
+    private double b;
 
     public Rectangle(double a, double b) {
         this.a = a;
