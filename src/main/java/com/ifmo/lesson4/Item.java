@@ -15,9 +15,6 @@ public class Item {
     /** Ссылка на следующий элемент. */
     public Item next;
 
-    public Item() {
-
-    }
 
     /**
      * Инициализирует элемент со значением
@@ -29,4 +26,6 @@ public class Item {
     Item(Object value) {
         this.value = value;
     }
+
+
 }

@@ -41,14 +41,20 @@ public class ArrayList implements List {
     @Override
     public void add(Object val) {
         // TODO implement.
+        for (int i = 0; i<values.length; i++) {
+            if(values[i] == null)
+                values[i] = val;
+        }
+
     }
 
     /** {@inheritDoc} */
     @Override
     public Object get(int i) {
         // TODO implement.
+        if(i > values.length || i < 0)   return null;
 
-        return null;
+        return values[i];
     }
 
     /** {@inheritDoc} */
@@ -56,6 +62,13 @@ public class ArrayList implements List {
     public Object remove(int i) {
         // TODO implement.
 
+        if(i > values.length || i < 0)   return null;
+        Object p = values[i];
+        int j = i;
+        for(j = i; j<values.length - 1; j++) {
+            values[j] = values[j+1];
+        }
+        values[j+1] = null;
         return null;
     }
 
@@ -64,6 +77,6 @@ public class ArrayList implements List {
     public Iterator iterator() {
         // TODO implement.
 
-        return null;
+        return this.iterator();
     }
 }

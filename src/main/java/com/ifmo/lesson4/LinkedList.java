@@ -8,27 +8,91 @@ package com.ifmo.lesson4;
 public class LinkedList {
     /** Ссылка на первый элемент списка. */
     private Item head;
-    private int _size;
 
-     /**
+     /*public interface Item {
+         public Item getNext();
+         public void setNext(Item node);
+     }*/
+
+    public Item getHead() {
+         return head;
+    }
+    public void insertAtHead(Item node){
+       setNext(head);
+       head = node;
+    }
+
+    //вставляем узел в конец списка
+    public void insertAtTail(Item node) {
+         if(head == null) {
+             head = node;
+         }
+         else {
+             Item p, q;
+             for(p = head; (q = p.next) != null; p = q) {
+                 setNext(node);
+             }
+         }
+    }
+
+    //удаляем узел в начале списка
+    public Item removeFromHead() {
+         Item node = head;
+         if(node != null) {
+             head = node.next;
+             setNext(null);
+         }
+
+         return node;
+    }
+
+    public Item removeFromTail() {
+         if(head == null) return null;
+         Item p = head, q = null, nex = head.next;
+         if(nex == null) {
+             head = null;
+             return p;
+         }
+         while((nex = p.next) != null) {
+             q = p;
+             p = nex;
+         }
+         q.next = null;
+         return p;
+    }
+
+    public void remove(Item node) {
+         if(node == null) return;
+         if(node.equals(node)) {
+             head = head.next;
+             return;
+         }
+         Item p = head, q = null;
+         while ((q = p.next) != null) {
+             if(node.equals(q)) {
+                 p.next = q.next;
+                 return;
+             }
+             p = q;
+         }
+    }
+    /**
      * Добавляет значение в конец списка.
      *
      * @param val Значение, которое будет добавлено.
      */
-     public int getSize() {
-         return _size;
-     }
-
     public void add(Object val) {
         // TODO implement
-       if(head == null)
-            head = new Item(val);
+       if(head == null) {
+           head = new Item(val);
+           return;
+       }
        else {
            Item it = head;
            while(true) {
              if(it.next == null) {
                  it.next = new Item(val);
-                 _size++;
+
                  return;
              }
              it = it.next;
@@ -36,6 +100,27 @@ public class LinkedList {
        }
     }
 
+    private Item find(int i) {
+        if (head == null)
+            return null;
+
+        if (i == 0)
+            return head;
+
+        int cnt = 1;
+
+        for (Item prev = head;;) {
+            Item next = prev.next;
+
+            if (next == null)
+                return i < 0 ? prev : null;
+
+            if (cnt++ == i)
+                return next;
+
+            prev = next;
+        }
+    }
     /**
      * Извлекает значение из списка по индексу.
      *
@@ -45,6 +130,9 @@ public class LinkedList {
      */
     public Object get(int i) {
         // TODO implement
+        if(head == null) return null;
+        //if(i == 0) return head;
+
         int j = 0;
         Item it = head;
         while(true)
@@ -75,6 +163,10 @@ public class LinkedList {
         }
 
         return null;
+    }
+
+    public void setNext(Item node) {
+        head.next = node;
     }
 
     public Object getNext() {
@@ -121,7 +213,7 @@ public class LinkedList {
                 if (it.next != null && j + 1 == i) {
                     //head.next = it.next;
                     it.next = it.next.next;
-                    _size--;
+
                     return it.value;
                 }
 
@@ -136,9 +228,11 @@ public class LinkedList {
     public static void main(String[] args)
     {
         LinkedList lkl = new LinkedList();
+
         lkl.add("etewrwt");
         lkl.add("lhkllg");
         lkl.add("kpokytk");
+
         //lkl.get(2);
         System.out.println(lkl.get(0));
         System.out.println(lkl.get(1));

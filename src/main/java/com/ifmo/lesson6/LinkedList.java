@@ -15,6 +15,11 @@ public class LinkedList implements List, Stack, Queue {
     @Override
     public void add(Object val) {
         // TODO implement.
+        if (head == null) {
+            head = new Item(val);
+            return;
+        }
+
     }
 
     /** {@inheritDoc} */
