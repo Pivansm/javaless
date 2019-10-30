@@ -1,7 +1,9 @@
-package com.ifmo.lesson4;
+package com.ifmo.lesson7;
 
-import com.ifmo.lesson4.Book;
-import java.util.*;
+import com.ifmo.lesson7.Book;
+
+import java.util.Hashtable;
+import java.util.Map;
 
 /**
  * Библиотека помогает вести учет книг: какие книги и сколько в ней хранятся.
@@ -39,13 +41,14 @@ import java.util.*;
  *     library.take(new Book("Stephen King", "Shining"), 10) // return 2
  * </pre>
  */
-public class Library {
-    com.ifmo.lesson7.Book book;
+public class Library2 {
+
+    Book book;
     Map<String, Integer> mBook;
     Map<String, Book> oBook;
     private int maxBookKinds;
     int countBook;
-    public Library(int maxBookKinds) {
+    public Library2(int maxBookKinds) {
         // TODO implement
         // Возможно здесь следует сынициализировать массив.
         this.maxBookKinds = maxBookKinds;
@@ -98,7 +101,7 @@ public class Library {
     }
 
     public static void main(String[] args) {
-        Library library = new Library(2);
+        Library2 library = new Library2(2);
         library.put(new Book("Stephen King", "Shining"), 2); // return true
         library.put(new Book("Stephen King", "Dark Tower"), 3); // return true
 
@@ -133,5 +136,4 @@ public class Library {
 
         }
     }
-
 }

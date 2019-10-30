@@ -55,12 +55,14 @@ public class LinkedList implements List, Stack, Queue {
     }
 
     /** {@inheritDoc} */
+    //Поместить элемент в стек
     @Override
     public void push(Object value) {
         // TODO implement.
     }
 
     /** {@inheritDoc} */
+    //Извлечь первый элемент из стека
     @Override
     public Object pop() {
         // TODO implement.
