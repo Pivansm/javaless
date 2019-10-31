@@ -34,6 +34,7 @@ public class ArrayList implements List {
      * @param initialSize Начальный размер внутреннего массива.
      */
     public ArrayList(int initialSize) {
+
         values = new Object[initialSize];
     }
 
@@ -45,7 +46,6 @@ public class ArrayList implements List {
             if(values[i] == null)
                 values[i] = val;
         }
-
     }
 
     /** {@inheritDoc} */
@@ -53,7 +53,6 @@ public class ArrayList implements List {
     public Object get(int i) {
         // TODO implement.
         if(i > values.length || i < 0)   return null;
-
         return values[i];
     }
 
@@ -76,7 +75,18 @@ public class ArrayList implements List {
     @Override
     public Iterator iterator() {
         // TODO implement.
+        Iterator it = new Iterator() {
+            private int currentIndex = 0;
+            @Override
+            public boolean hasNext() {
+                return currentIndex < values.length && values[currentIndex] != null;
+            }
 
-        return this.iterator();
+            @Override
+            public Object next() {
+                return values[currentIndex++];
+            }
+        };
+         return it;
     }
 }

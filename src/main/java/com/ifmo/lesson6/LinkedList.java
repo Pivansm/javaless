@@ -11,13 +11,29 @@ public class LinkedList implements List, Stack, Queue {
     /** Ссылка на первый элемент списка. */
     private Item head;
 
+    public void setNext(Item node) {
+        head.next = node;
+    }
     /** {@inheritDoc} */
     @Override
     public void add(Object val) {
         // TODO implement.
+        Item newItem = new Item(val);
         if (head == null) {
-            head = new Item(val);
+            newItem.next = null;
+            head = newItem;
             return;
+        }
+        else {
+            for (Item prev = head;;) {
+                 Item next = prev.next;
+
+                if (next == null) {
+                    next =  newItem;
+                    return;
+                }
+                  prev = next;
+            }
         }
 
     }
@@ -34,8 +50,15 @@ public class LinkedList implements List, Stack, Queue {
     @Override
     public Object get(int i) {
         // TODO implement.
-
-        return null;
+        Item f = head;
+        int current = 0;
+        if(i < 0) return null;
+        if(i == 0 && head != null) return head.value;
+        while(current != i) {
+            f = f.next;
+            current++;
+        }
+        return f.value;
     }
 
     /** {@inheritDoc} */
@@ -50,8 +73,25 @@ public class LinkedList implements List, Stack, Queue {
     @Override
     public Iterator iterator() {
         // TODO implement.
+        Iterator it = new Iterator() {
+            Item current = head;
+            @Override
+            public boolean hasNext() {
+                return current != null;
+            }
 
-        return null;
+            @Override
+            public Object next() {
+                if(hasNext()) {
+                    Object data = current.value;
+                    current = current.next;
+                    return data;
+                }
+                return null;
+            }
+        };
+
+        return it;
     }
 
     /** {@inheritDoc} */

@@ -51,6 +51,15 @@ public class WallClock {
     public static String remainingHours(int rndSecond) {
         // TODO implement
         int ch = (rndSecond/60)/60;
-        return "" + rndSecond + "\nОсталось менее " + ch +" часа";
+        String ouWall = "";
+        switch (ch) {
+            case 0: ouWall = "Осталось менее часа"; break;
+            case 1: ouWall = "Остался 1 час"; break;
+            case 2:
+            case 3:
+            case 4: ouWall = "Осталось " + ch + " часа"; break;
+            default: ouWall = "Осталось " + ch + " часов"; break;
+        }
+        return ouWall;
     }
 }

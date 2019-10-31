@@ -18,11 +18,12 @@ public class Factorial {
     }
 
     public static long factorial(int n) {
+        if(n < 0) return 0;
         // TODO implement
         int fktr = 1;
-        for(int i=1; i<=n; i++)
+        for(int i=1; i<n; i++)
         {
-            fktr =fktr*i;
+            fktr = fktr * i;
         }
         return fktr;
     }
