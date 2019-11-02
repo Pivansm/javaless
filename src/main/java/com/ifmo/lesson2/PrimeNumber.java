@@ -24,7 +24,14 @@ public class PrimeNumber {
 
     public static boolean isPrime(int n) {
         // TODO implement
-
-        return false;
+        int dl = 2;
+        boolean isPrim = true;
+        for(int i = 2; i < n; i++) {
+            if(n%i == 0)  {
+                isPrim = false;
+                break;
+            };
+        }
+        return isPrim;
     }
 }

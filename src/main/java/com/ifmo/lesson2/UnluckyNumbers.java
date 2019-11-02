@@ -27,16 +27,14 @@ public class UnluckyNumbers {
                     //System.out.println(s);
                     break;
                 }
-            }
-
-            for(int j = 1; j <s.length(); j++) {
-                if (s.charAt(j) == '3' && s.charAt(j-1) == '1') {
-
+                if (s.charAt(j) == '3' && (j - 1 >=0 && s.charAt(j-1) == '1')) {
                     cnt++;
-                    //System.out.println(s);
                     break;
                 }
+
+
             }
+
 
         }
 
