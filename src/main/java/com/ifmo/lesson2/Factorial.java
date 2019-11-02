@@ -18,13 +18,9 @@ public class Factorial {
     }
 
     public static long factorial(int n) {
-        if(n < 0) return 0;
+        if(n <= 2) return 2;
+        return n * factorial(n - 1);
         // TODO implement
-        int fktr = 1;
-        for(int i=1; i<n; i++)
-        {
-            fktr = fktr * i;
-        }
-        return fktr;
+
     }
 }
