@@ -26,11 +26,11 @@ public class SquareEquation {
         double[] asru = new double[2];
         double d = Math.pow(b, 2) - 4*a*c;
         if (d > 0) {
-            asru[0] = -b + Math.sqrt(d);
-            asru[1] = -b - Math.sqrt(d);
+            asru[0] = (-b - Math.sqrt(d))/(2*a);
+            asru[1] = (-b + Math.sqrt(d))/(2*2);
 
         } else if (d == 0) {
-            asru[0] = -b / 2 * a;
+            asru[0] = -b / (2 * a);
             asru[1] = 0.00;
 
         } else {

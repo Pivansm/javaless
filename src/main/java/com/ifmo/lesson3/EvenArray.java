@@ -15,7 +15,7 @@ public class EvenArray {
         {
             System.out.print(i + " ");
         }
-
+        System.out.print("\n");
         for(int i : evenArray)
         {
             System.out.println(i + "");
