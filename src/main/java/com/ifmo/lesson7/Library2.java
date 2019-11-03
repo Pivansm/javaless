@@ -86,14 +86,16 @@ public class Library2 {
         // TODO implement
         String hesBook = book.author.replace(" ", "").toUpperCase() + book.title.replace(" ", "").toLowerCase();
         if(mBook.containsKey(hesBook) ) {
-            if(mBook.get(hesBook) < quantity) {
+            if(mBook.get(hesBook) > quantity) {
                 int cntBook = mBook.get(hesBook);
-                mBook.put(hesBook, quantity - cntBook);
-                return quantity - cntBook;
+                mBook.put(hesBook, cntBook - quantity);
+                return quantity;
             }
             else {
+                int cntBook = mBook.get(hesBook);
                 mBook.remove(hesBook);
                 oBook.remove(hesBook);
+                return cntBook;
             }
 
         }

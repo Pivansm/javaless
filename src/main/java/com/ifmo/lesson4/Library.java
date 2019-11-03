@@ -68,7 +68,6 @@ public class Library {
             oBook.put(hesBook, book);
             return true;
         }
-
         return false;
     }
 
@@ -83,14 +82,16 @@ public class Library {
         // TODO implement
         String hesBook = book.author.replace(" ", "").toUpperCase() + book.title.replace(" ", "").toLowerCase();
         if(mBook.containsKey(hesBook) ) {
-            if(mBook.get(hesBook) < quantity) {
+            if(mBook.get(hesBook) > quantity) {
                 int cntBook = mBook.get(hesBook);
-                mBook.put(hesBook, quantity - cntBook);
-                return quantity - cntBook;
+                mBook.put(hesBook, cntBook - quantity);
+                return quantity;
             }
             else {
+                int cntBook = mBook.get(hesBook);
                 mBook.remove(hesBook);
                 oBook.remove(hesBook);
+                return cntBook;
             }
 
         }
@@ -112,7 +113,8 @@ public class Library {
             System.out.printf("Book: author %s title: %s : count %s\n", bookOb.author, bookOb.title, cntBook);
         }
         System.out.println("--------------------");
-        library.take(new Book("Stephen King", "Dark Tower"), 3);
+        int qu = library.take(new Book("Stephen King", "Dark Tower"), 1);
+        System.out.println("Кол выд = " + qu);
 
         for(Map.Entry<String, Integer> item : library.mBook.entrySet()){
 
@@ -122,6 +124,9 @@ public class Library {
             System.out.printf("Book: author %s title: %s : count %s\n", bookOb.author, bookOb.title, cntBook);
 
         }
+        qu = library.take(new Book("Stephen King", "Dark Tower"), 3);
+        System.out.println("Кол выд = " + qu);
+
         System.out.println("--------------------");
         library.put(new Book("Tolstoy", "War and peace"), 6);
         for(Map.Entry<String, Integer> item : library.mBook.entrySet()){
