@@ -15,7 +15,7 @@ import java.util.Iterator;
  * |0|1|3|4|5|_|
  * Теперь при итерации по ним после 1 будет идти сразу 3, как в связном списке.
  */
-public class ArrayList implements List {
+public class ArrayList<T> implements List<T> {
     private static final int DEFAULT_SIZE = 10;
 
     private Object[] values;
@@ -40,7 +40,7 @@ public class ArrayList implements List {
 
     /** {@inheritDoc} */
     @Override
-    public void add(Object val) {
+    public void add(T val) {
         // TODO implement.
         for (int i = 0; i<values.length; i++) {
             if(values[i] == null)
@@ -50,15 +50,15 @@ public class ArrayList implements List {
 
     /** {@inheritDoc} */
     @Override
-    public Object get(int i) {
+    public T get(int i) {
         // TODO implement.
         if(i > values.length || i < 0)   return null;
-        return values[i];
+        return (T) values[i];
     }
 
     /** {@inheritDoc} */
     @Override
-    public Object remove(int i) {
+    public T remove(int i) {
         // TODO implement.
 
         if(i > values.length || i < 0)   return null;
@@ -73,9 +73,9 @@ public class ArrayList implements List {
 
     /** {@inheritDoc} */
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         // TODO implement.
-        Iterator it = new Iterator() {
+        Iterator<T> it = new Iterator<T>() {
             private int currentIndex = 0;
             @Override
             public boolean hasNext() {
@@ -83,8 +83,8 @@ public class ArrayList implements List {
             }
 
             @Override
-            public Object next() {
-                return values[currentIndex++];
+            public T next() {
+                return (T)values[currentIndex++];
             }
         };
          return it;

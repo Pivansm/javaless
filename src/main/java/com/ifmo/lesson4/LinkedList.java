@@ -61,21 +61,7 @@ public class LinkedList {
          return p;
     }
 
-    public void remove(Item node) {
-         if(node == null) return;
-         if(node.equals(node)) {
-             head = head.next;
-             return;
-         }
-         Item p = head, q = null;
-         while ((q = p.next) != null) {
-             if(node.equals(q)) {
-                 p.next = q.next;
-                 return;
-             }
-             p = q;
-         }
-    }
+
     /**
      * Добавляет значение в конец списка.
      *
@@ -83,21 +69,22 @@ public class LinkedList {
      */
     public void add(Object val) {
         // TODO implement
-       if(head == null) {
-           head = new Item(val);
-           return;
-       }
-       else {
-           Item it = head;
-           while(true) {
-             if(it.next == null) {
-                 it.next = new Item(val);
-
-                 return;
-             }
-             it = it.next;
-           }
-       }
+        Item newItem = new Item(val);
+        if (head == null) {
+            newItem.next = null;
+            head = newItem;
+            return;
+        }
+        else {
+            Item it = head;
+            while(true) {
+                if(it.next == null) {
+                    it.next = newItem;
+                    return;
+                }
+                it = it.next;
+            }
+        }
     }
 
     private Item find(int i) {
@@ -130,22 +117,16 @@ public class LinkedList {
      */
     public Object get(int i) {
         // TODO implement
-        if(head == null) return null;
-        //if(i == 0) return head;
-
-        int j = 0;
-        Item it = head;
-        while(true)
-        {
-            if (j == i) {
-                return it.value;
-            }
-            if(it.next == null) break;
-            j++;
-            it = it.next;
+        Item f = head;
+        int current = 0;
+        if(i < 0) return null;
+        if(i == 0 && head != null) return head.value;
+        while(current != i) {
+            if(f.next == null) { return null; }
+            f = f.next;
+            current++;
         }
-
-        return null;
+        return f.value;
     }
 
     public Object getNext(int i) {
@@ -189,10 +170,10 @@ public class LinkedList {
             else
                 return false;
 
-            if(slow == null || fast == null) // if either hits null..no loop
+            if(slow == null || fast == null)
                 return false;
 
-            if(slow == fast) // if the two ever meet...we must have a loop
+            if(slow == fast)
                 return true;
         }
     }
@@ -207,19 +188,26 @@ public class LinkedList {
     public Object remove(int i) {
         // TODO implement
         int j = 0;
+        if (i == 0) {
+            Item h = head;
+            head = head.next;
+            return h.value;
+        }
         if(head != null) {
-            Item it = head;
-            while (true) {
-                if (it.next != null && j + 1 == i) {
-                    //head.next = it.next;
-                    it.next = it.next.next;
 
-                    return it.value;
+            Item h = head;
+            Item r = null;
+            while (true) {
+                if (h.next != null && j + 1 == i) {
+                    r = h.next;
+                    h.next = h.next.next;
+                    return r.value;
                 }
 
-                if (it.next == null) break;
+                if (h.next == null) break;
                 j++;
-                it = it.next;
+                r = h;
+                h = h.next;
             }
         }
         return null;
@@ -237,11 +225,13 @@ public class LinkedList {
         System.out.println(lkl.get(0));
         System.out.println(lkl.get(1));
         System.out.println(lkl.get(2));
-        lkl.remove(1);
-        System.out.print("\n");
+
+        lkl.remove(2);
+
+        System.out.print("-----------\n");
         System.out.println(lkl.get(0));
         System.out.println(lkl.get(1));
-        System.out.println(lkl.get(2));
+        System.out.println(lkl.get(3));
 
 
     }

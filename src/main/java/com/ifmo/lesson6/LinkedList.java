@@ -7,32 +7,31 @@ import java.util.Iterator;
  * элемент харнит ссылку на следующий. Список
  * оканчивается ссылкой со значением {@code null}.
  */
-public class LinkedList implements List, Stack, Queue {
+public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
     /** Ссылка на первый элемент списка. */
-    private Item head;
+    private Item<T> head;
 
     public void setNext(Item node) {
         head.next = node;
     }
     /** {@inheritDoc} */
     @Override
-    public void add(Object val) {
+    public void add(T val) {
         // TODO implement.
-        Item newItem = new Item(val);
+        Item<T> newItem = new Item(val);
         if (head == null) {
             newItem.next = null;
             head = newItem;
             return;
         }
         else {
-            for (Item prev = head;;) {
-                 Item next = prev.next;
-
-                if (next == null) {
-                    next =  newItem;
+            Item it = head;
+            while(true) {
+                if(it.next == null) {
+                    it.next = newItem;
                     return;
                 }
-                  prev = next;
+                it = it.next;
             }
         }
 
@@ -40,7 +39,7 @@ public class LinkedList implements List, Stack, Queue {
 
     /** {@inheritDoc} */
     @Override
-    public Object take() {
+    public T take() {
         // TODO implement.
 
         return null;
@@ -48,13 +47,14 @@ public class LinkedList implements List, Stack, Queue {
 
     /** {@inheritDoc} */
     @Override
-    public Object get(int i) {
+    public T get(int i) {
         // TODO implement.
-        Item f = head;
+        Item<T> f = head;
         int current = 0;
         if(i < 0) return null;
         if(i == 0 && head != null) return head.value;
         while(current != i) {
+            if(f.next == null) { return null; }
             f = f.next;
             current++;
         }
@@ -63,48 +63,72 @@ public class LinkedList implements List, Stack, Queue {
 
     /** {@inheritDoc} */
     @Override
-    public Object remove(int i) {
+    public T remove(int i) {
         // TODO implement.
+        int j = 0;
+        if (i == 0) {
+            Item<T> h = head;
+            head = head.next;
+            return h.value;
+        }
+        if(head != null) {
 
+            Item<T> h = head;
+            Item<T> r = null;
+            while (true) {
+                 if (h.next != null && j + 1 == i) {
+                     r = h.next;
+                     h.next = h.next.next;
+                     return r.value;
+                  }
+
+                if (h.next == null) break;
+                j++;
+                r = h;
+                h = h.next;
+            }
+        }
         return null;
+
     }
 
     /** {@inheritDoc} */
     @Override
-    public Iterator iterator() {
+    public Iterator<T> iterator() {
         // TODO implement.
-        Iterator it = new Iterator() {
-            Item current = head;
+        Iterator<T> it = new Iterator<T>() {
+            Item<T> current = head;
+
             @Override
             public boolean hasNext() {
                 return current != null;
             }
 
             @Override
-            public Object next() {
+            public T next() {
                 if(hasNext()) {
-                    Object data = current.value;
+                    T data = current.value;
                     current = current.next;
                     return data;
                 }
                 return null;
             }
         };
-
         return it;
     }
 
     /** {@inheritDoc} */
     //Поместить элемент в стек
     @Override
-    public void push(Object value) {
+    public void push(T value) {
         // TODO implement.
+
     }
 
     /** {@inheritDoc} */
     //Извлечь первый элемент из стека
     @Override
-    public Object pop() {
+    public T pop() {
         // TODO implement.
 
         return null;
