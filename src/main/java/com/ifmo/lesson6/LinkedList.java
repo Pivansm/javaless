@@ -41,9 +41,19 @@ public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
     @Override
     public T take() {
         // TODO implement.
-
-        return null;
-    }
+        if(head == null) return null;
+        Item<T> p = head, q = null, nex = head.next;
+        if(nex == null) {
+            head = null;
+            return p.value;
+        }
+        while((nex = p.next) != null) {
+            q = p;
+            p = nex;
+        }
+        q.next = null;
+        return p.value;
+      }
 
     /** {@inheritDoc} */
     @Override
@@ -122,14 +132,27 @@ public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
     @Override
     public void push(T value) {
         // TODO implement.
+        Item<T> insertion = new Item(value);
+        if (head == null) {
+            head = insertion;
+        } else {
+            insertion.next = head;
+            head = insertion;
+        }
 
-    }
+     }
 
     /** {@inheritDoc} */
     //Извлечь первый элемент из стека
     @Override
     public T pop() {
         // TODO implement.
+        Item<T> node = head;
+        if(node != null) {
+            head = node.next;
+            //if(head.next != null) { head.next = null; }
+            return node.value;
+        }
 
         return null;
     }

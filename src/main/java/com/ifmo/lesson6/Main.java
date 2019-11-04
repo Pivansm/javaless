@@ -5,10 +5,10 @@ import java.util.Iterator;
 public class Main {
     public static void main(String[] args) {
         /*List<String> list = new LinkedList<>();
-        list.add("Privet");
-        list.add("Da");
-        list.add("Net");
-        list.add("Yfhf[j");
+        list.add("Privet1");
+        list.add("Da2");
+        list.add("Net3");
+        list.add("Yfhf[j4");
 
         System.out.println("" + list.get(1));
 
@@ -22,8 +22,31 @@ public class Main {
             System.out.println("" + it.next());
         }*/
 
-        ArrayList arrayList = new ArrayList();
-        arrayList.add("Ax1");
+        /*ArrayList arrayList = new ArrayList();
+        arrayList.add("Ax1");*/
+
+       //Стек
+      /*  Stack<String> list = new LinkedList<>();
+
+        list.push("wtret1");
+        list.push("fgdty2");
+        list.push("fgdty3");
+
+        System.out.println("" + list.pop().toString());
+        System.out.println("" + list.pop().toString());*/
+
+
+        //Очередь
+        Queue<String> ql =new LinkedList<>();
+
+        ql.add("Privet1");
+        ql.add("Da2");
+        ql.add("Net3");
+        ql.add("Yfhf[j4");
+
+        System.out.println("" + ql.take().toString());
+        System.out.println("" + ql.take().toString());
+
 
     }
 }
