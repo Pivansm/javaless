@@ -19,6 +19,7 @@ public class ArrayList<T> implements List<T> {
     private static final int DEFAULT_SIZE = 10;
 
     private Object[] values;
+    private int pointer;
 
     /**
      * Создаёт новый {@link #ArrayList} с размером внутреннего массива по умолчанию.
@@ -36,16 +37,17 @@ public class ArrayList<T> implements List<T> {
     public ArrayList(int initialSize) {
 
         values = new Object[initialSize];
+        this.pointer = 0;
     }
 
     /** {@inheritDoc} */
     @Override
     public void add(T val) {
         // TODO implement.
-        for (int i = 0; i<values.length; i++) {
-            if(values[i] == null)
-                values[i] = val;
-        }
+        if(pointer == values.length-1)
+            resize(values.length*2); // увеличу в 2 раза, если достигли границ
+        values[pointer++] = val;
+
     }
 
     /** {@inheritDoc} */
@@ -56,19 +58,23 @@ public class ArrayList<T> implements List<T> {
         return (T) values[i];
     }
 
+    private void resize(int newLength) {
+        Object[] newArray = new Object[newLength];
+        System.arraycopy(values, 0, newArray, 0, pointer);
+        values = newArray;
+    }
+
     /** {@inheritDoc} */
     @Override
     public T remove(int i) {
         // TODO implement.
-
         if(i > values.length || i < 0)   return null;
-        Object p = values[i];
-        int j = i;
-        for(j = i; j<values.length - 1; j++) {
-            values[j] = values[j+1];
-        }
-        values[j+1] = null;
-        return null;
+        Object it = values[i];
+        for (int j = i; j<pointer; j++)
+            values[i] = values[i+1];
+        values[pointer] = null;
+        pointer--;
+        return (T)it;
     }
 
     /** {@inheritDoc} */
@@ -79,7 +85,7 @@ public class ArrayList<T> implements List<T> {
             private int currentIndex = 0;
             @Override
             public boolean hasNext() {
-                return currentIndex < values.length && values[currentIndex] != null;
+                return currentIndex < pointer && values[currentIndex] != null;
             }
 
             @Override
