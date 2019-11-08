@@ -8,7 +8,7 @@ import java.util.List;
 public class CollectionUtils {
     public static <T> Iterable<T> view(Iterable<T>...iterables) {
         if (iterables.length == 0)
-            return List.of();
+            return null;
 
         return new Iterable<T>() {
             @Override
