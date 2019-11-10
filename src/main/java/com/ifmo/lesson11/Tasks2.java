@@ -1,13 +1,12 @@
 package com.ifmo.lesson11;
 
+import com.ifmo.lesson10.CollectionUtils;
 import com.ifmo.lesson11.inner.Message;
 import com.ifmo.lesson11.inner.MessagePriority;
 import com.ifmo.lesson11.inner.User;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.NavigableSet;
+import java.util.*;
+
 
 import static com.ifmo.lesson11.inner.UserGenerator.generate;
 
@@ -20,11 +19,19 @@ public class Tasks2 {
     }
 
     private static void sortByPriority(List<Message> messages, MessagePriority priority) {
-
+        //Map<MessagePriority, Integer> map = new TreeMap<>();
+        new Comparator<Message>() {
+            @Override
+            public int compare(Message e1, Message e2) {
+                return e1.getPriority().compareTo(e2.getPriority());
+            }
+        };
+        //messages((Message e1, Message e2) -> e1.getPriority().compareTo(e2.getPriority()));
     }
 
     private static NavigableSet<User> sortedByCompanyAndName(List<User> users) {
 
+        //Collections<User> cl = new
         return Collections.emptyNavigableSet();
     }
 

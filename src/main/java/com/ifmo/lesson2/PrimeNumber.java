@@ -25,6 +25,8 @@ public class PrimeNumber {
     public static boolean isPrime(int n) {
         // TODO implement
         int dl = 2;
+        if (n<=1)
+            return false;
         boolean isPrim = true;
         for(int i = 2; i < n; i++) {
             if(n%i == 0)  {
