@@ -12,9 +12,13 @@ public class SquareEquation {
         //double a = 2;
         //double b = -9;
         //double c = 9;
-        double a = 10.0;
-        double b = -11.0;
-        double c = 3.0;
+        //double a = 10.0;
+        //double b = -11.0;
+        //double c = 3.0;
+
+        double a = 3.0;
+        double b = -18.0;
+        double c = 27.0;
 
         double[] roots = squareEquationRoots(a, b, c);
 
@@ -34,7 +38,7 @@ public class SquareEquation {
 
         } else if (d == 0) {
             asru[0] = -b / (2 * a);
-            asru[1] = 0.00;
+            //asru[1] = 0;
 
         } else {
             System.out.println("Корней нет");

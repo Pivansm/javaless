@@ -22,8 +22,21 @@ public class Main {
             System.out.println("" + it.next());
         }*/
 
-        /*ArrayList arrayList = new ArrayList();
-        arrayList.add("Ax1");*/
+        ArrayList arrayList = new ArrayList();
+        arrayList.add("Ax1");
+        arrayList.add("Ax2");
+        arrayList.add("Ax3");
+        arrayList.add("Ax4");
+        arrayList.add("Ax5");
+
+        Iterator<String> it = arrayList.iterator();
+        while(it.hasNext()) {
+            System.out.println("" + it.next());
+        }
+
+        System.out.println("" + arrayList.get(2));
+        System.out.println("" + arrayList.remove(2));
+        System.out.println("" + arrayList.get(2));
 
        //Стек
       /*  Stack<String> list = new LinkedList<>();
@@ -37,7 +50,7 @@ public class Main {
 
 
         //Очередь
-        Queue<String> ql =new LinkedList<>();
+        /*Queue<String> ql =new LinkedList<>();
 
         ql.add("Privet1");
         ql.add("Da2");
@@ -45,7 +58,7 @@ public class Main {
         ql.add("Yfhf[j4");
 
         System.out.println("" + ql.take().toString());
-        System.out.println("" + ql.take().toString());
+        System.out.println("" + ql.take().toString());*/
 
 
     }
