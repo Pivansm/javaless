@@ -9,59 +9,6 @@ public class LinkedList {
     /** Ссылка на первый элемент списка. */
     private Item head;
 
-     /*public interface Item {
-         public Item getNext();
-         public void setNext(Item node);
-     }*/
-
-    public Item getHead() {
-         return head;
-    }
-    public void insertAtHead(Item node){
-       setNext(head);
-       head = node;
-    }
-
-    //вставляем узел в конец списка
-    public void insertAtTail(Item node) {
-         if(head == null) {
-             head = node;
-         }
-         else {
-             Item p, q;
-             for(p = head; (q = p.next) != null; p = q) {
-                 setNext(node);
-             }
-         }
-    }
-
-    //удаляем узел в начале списка
-    public Item removeFromHead() {
-         Item node = head;
-         if(node != null) {
-             head = node.next;
-             setNext(null);
-         }
-
-         return node;
-    }
-
-    public Item removeFromTail() {
-         if(head == null) return null;
-         Item p = head, q = null, nex = head.next;
-         if(nex == null) {
-             head = null;
-             return p;
-         }
-         while((nex = p.next) != null) {
-             q = p;
-             p = nex;
-         }
-         q.next = null;
-         return p;
-    }
-
-
     /**
      * Добавляет значение в конец списка.
      *
@@ -69,22 +16,12 @@ public class LinkedList {
      */
     public void add(Object val) {
         // TODO implement
-        Item newItem = new Item(val);
         if (head == null) {
-            newItem.next = null;
-            head = newItem;
+            head = new Item(val);
             return;
         }
-        else {
-            Item it = head;
-            while(true) {
-                if(it.next == null) {
-                    it.next = newItem;
-                    return;
-                }
-                it = it.next;
-            }
-        }
+        //noinspection ConstantConditions
+        find(-1).next = new Item(val);
     }
 
     private Item find(int i) {
@@ -117,43 +54,11 @@ public class LinkedList {
      */
     public Object get(int i) {
         // TODO implement
-        Item f = head;
-        int current = 0;
-        if(i < 0) return null;
-        if(i == 0 && head != null) return head.value;
-        while(current != i) {
-            if(f.next == null) { return null; }
-            f = f.next;
-            current++;
-        }
-        return f.value;
+        Item item = find(i);
+
+        return item == null ? null : item.value;
     }
 
-    public Object getNext(int i) {
-        // TODO implement
-        int j = 0;
-        Item it = head;
-        while(true)
-        {
-            if (j == i) {
-                return it.next;
-            }
-            if(it.next == null) break;
-            j++;
-            it = it.next;
-        }
-
-        return null;
-    }
-
-    public void setNext(Item node) {
-        head.next = node;
-    }
-
-    public Object getNext() {
-        // TODO implement
-        return head.next;
-     }
 
     public boolean hasLoop() {
 
@@ -187,31 +92,27 @@ public class LinkedList {
      */
     public Object remove(int i) {
         // TODO implement
-        int j = 0;
+        if (head == null)
+            return null;
+
         if (i == 0) {
             Item h = head;
             head = head.next;
             return h.value;
         }
-        if(head != null) {
 
-            Item h = head;
-            Item r = null;
-            while (true) {
-                if (h.next != null && j + 1 == i) {
-                    r = h.next;
-                    h.next = h.next.next;
-                    return r.value;
-                }
+        Item prev = find(i - 1);
+        Item cur;
 
-                if (h.next == null) break;
-                j++;
-                r = h;
-                h = h.next;
-            }
+        if (prev != null && (cur = prev.next) != null) {
+            prev.next = cur.next;
+
+            return cur.value;
         }
+
         return null;
     }
+
 
     public static void main(String[] args)
     {
