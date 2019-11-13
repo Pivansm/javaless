@@ -23,7 +23,7 @@ public class Utils {
         return result;
     }
 
-    public static <T, R> Iterable<R> view(Predicate<T> filter, Transformer<T, R> transformer, Iterable<R>...iterables){
+    public static <T, R> Iterable<R> view(Predicate<T> filter, Transformer<T, R> transformer, Iterable<T>...iterables){
         if (iterables.length == 0)
             return null;
 
@@ -32,7 +32,7 @@ public class Utils {
             public Iterator<R> iterator() {
                 return new Iterator<R>() {
                     private int pos;
-                    private Iterator<R> current;
+                    private Iterator<T> current;
 
                     @Override
                     public boolean hasNext() {
@@ -55,7 +55,8 @@ public class Utils {
 
                     @Override
                     public R next() {
-                        return current.next();
+
+                        return transformer.transform(current.next());
                     }
                 };
             }
