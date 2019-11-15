@@ -25,6 +25,7 @@ public class ArrayList<T> implements List<T> {
      * Создаёт новый {@link #ArrayList} с размером внутреннего массива по умолчанию.
      */
     public ArrayList() {
+
         this(DEFAULT_SIZE);
     }
 
@@ -71,7 +72,7 @@ public class ArrayList<T> implements List<T> {
         if(i > values.length - 1 || i < 0)   return null;
         Object it = values[i];
         for (int j = i; j<pointer; j++)
-            values[i] = values[i+1];
+            values[j] = values[j+1];
         values[pointer] = null;
         pointer--;
         return (T)it;

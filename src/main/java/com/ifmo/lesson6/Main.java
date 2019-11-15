@@ -34,7 +34,7 @@ public class Main {
         System.out.println("" + list.get(0));*/
 
 
-        /*ArrayList arrayList = new ArrayList();
+        ArrayList arrayList = new ArrayList(5);
         arrayList.add("Ax1");
         arrayList.add("Ax2");
         arrayList.add("Ax3");
@@ -48,8 +48,13 @@ public class Main {
 
         System.out.println("" + arrayList.get(1));
         System.out.println("==========");
-        System.out.println("" + arrayList.remove(1));
-        System.out.println("" + arrayList.get(1));*/
+        System.out.println("" + arrayList.remove(0));
+        System.out.println("" + arrayList.remove(0));
+        System.out.println("" + arrayList.remove(0));
+        System.out.println("" + arrayList.remove(0));
+        System.out.println("" + arrayList.remove(0));
+        System.out.println("" + arrayList.remove(0));
+        System.out.println("" + arrayList.get(1));
 
        //Стек
       /*  Stack<String> list = new LinkedList<>();
@@ -63,7 +68,7 @@ public class Main {
 
 
         //Очередь
-        Queue<String> ql =new LinkedList<>();
+        /*Queue<String> ql =new LinkedList<>();
 
         System.out.println("" + ql.take());
 
@@ -76,6 +81,6 @@ public class Main {
         System.out.println("" + ql.take());
         System.out.println("" + ql.take());
         System.out.println("" + ql.take());
-        System.out.println("" + ql.take());
+        System.out.println("" + ql.take());*/
     }
 }
