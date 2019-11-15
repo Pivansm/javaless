@@ -41,14 +41,14 @@ import java.util.Map;
  *     library.take(new Book("Stephen King", "Shining"), 10) // return 2
  * </pre>
  */
-public class Library2 {
+public class Library {
 
     Book book;
     Map<String, Integer> mBook;
     Map<String, Book> oBook;
     private int maxBookKinds;
     int countBook;
-    public Library2(int maxBookKinds) {
+    public Library(int maxBookKinds) {
         // TODO implement
         // Возможно здесь следует сынициализировать массив.
         this.maxBookKinds = maxBookKinds;
@@ -103,7 +103,7 @@ public class Library2 {
     }
 
     public static void main(String[] args) {
-        Library2 library = new Library2(2);
+        Library library = new Library(2);
         library.put(new Book("Stephen King", "Shining"), 2); // return true
         library.put(new Book("Stephen King", "Dark Tower"), 3); // return true
 
