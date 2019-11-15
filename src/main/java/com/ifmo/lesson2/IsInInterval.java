@@ -30,9 +30,9 @@ public class IsInInterval {
         // TODO implement
         String ost = "";
         if(rnd<25 || rnd > 100)
-            ost = "Число " + rnd + " не содержится в интервале (25,100) ";
+            ost = "Число " + rnd + " не содержится в интервале (25,100)";
         else
-            ost = "Число " + rnd + " содержится в интервале (25,100) ";
+            ost = "Число " + rnd + " содержится в интервале (25,100)";
 
         return ost;
     }

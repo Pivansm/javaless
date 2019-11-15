@@ -54,7 +54,7 @@ public class ArrayList<T> implements List<T> {
     @Override
     public T get(int i) {
         // TODO implement.
-        if(i > values.length || i < 0)   return null;
+        if(i > values.length -1  || i < 0)   return null;
         return (T) values[i];
     }
 

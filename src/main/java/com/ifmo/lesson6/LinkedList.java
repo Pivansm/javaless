@@ -59,6 +59,7 @@ public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
     @Override
     public T get(int i) {
         // TODO implement.
+        if(head == null) return null;
         Item<T> f = head;
         int current = 0;
         if(i < 0) return null;

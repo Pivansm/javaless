@@ -48,8 +48,14 @@ public class StreamTasks {
     public static List<String> countriesSortedByTheirPopulationDescending(Stream<Person> people) {
         // TODO implement.
 
-                 people
-                .sorted((e1, e2) -> e1.country.compareTo(e2.country)).collect(Collectors.toList());
+          Map<String, Long>  popInCoyntry = people
+                 .collect(Collectors.groupingBy(p -> p.country, Collectors.counting()));
+
+          popInCoyntry.entrySet()
+                  .stream()
+                  .sorted((e1, e2) -> e1.getValue().compareTo(e2.getValue()))
+                  .map(entry -> entry.getKey())
+                  .collect(Collectors.toList());
 
         return List.of();
     }
@@ -82,7 +88,7 @@ public class StreamTasks {
 
 
 
-    private static List<String> COUNTRY = List.of("qrr", "ddd", "qrrt");
+    private static List<String> COUNTRY = List.of("Japan", "China", "Rossia");
     private static List<String> NAME = List.of("Ivan", "Semen", "John");
     // Метод генерирует случайных людей в ограниченном наборе стран.
     // number - число желаемых людей.
@@ -106,8 +112,11 @@ public class StreamTasks {
     // Метод находит среднюю длину слов в списке.
     public static int averageWordLength(List<String> words) {
         // TODO implement.
+        int avg = words.stream()
+        .map(word -> word.length())
+        .collect(Collectors.averagingInt(l -> l)).intValue();
 
-        return 0;
+        return avg;
     }
 
     // Метод находит самое длинное слово или слова, если таких несколько.
