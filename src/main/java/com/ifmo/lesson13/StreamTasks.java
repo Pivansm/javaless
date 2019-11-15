@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 
 public class StreamTasks {
 
-    private static class Person {
+    protected static class Person {
         private final String name;
         private final int age;
         private final String country;
@@ -95,9 +95,8 @@ public class StreamTasks {
     public static Stream<Person> generatePeople(int number) {
         Random rnd = new Random();
         // TODO implement.
-        Stream.generate(() -> new Person(NAME.get(rnd.nextInt(NAME.size())), rnd.nextInt(number), COUNTRY.get(rnd.nextInt(COUNTRY.size())))).limit(number);
+        return Stream.generate(() -> new Person(NAME.get(rnd.nextInt(NAME.size())), rnd.nextInt(number), COUNTRY.get(rnd.nextInt(COUNTRY.size())))).limit(number);
 
-        return Stream.of();
     }
 
     // Метод возвращает карту сгруппированных слов по их длине. Например, для

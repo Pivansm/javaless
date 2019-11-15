@@ -30,16 +30,16 @@ public class SquareEquation {
      */
     public static double[] squareEquationRoots(double a, double b, double c) {
         // TODO implement
-        double[] asru = new double[2];
+        double[] asru = null;
         double d = Math.pow(b, 2) - 4*a*c;
         if (d > 0) {
+            asru = new double[2];
             asru[0] = (-b - Math.sqrt(d))/(2*a);
             asru[1] = (-b + Math.sqrt(d))/(2*a);
 
         } else if (d == 0) {
+            asru = new double[1];
             asru[0] = -b / (2 * a);
-            //asru[1] = 0;
-
         } else {
             System.out.println("Корней нет");
         }
