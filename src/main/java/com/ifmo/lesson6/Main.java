@@ -5,24 +5,36 @@ import java.util.Iterator;
 public class Main {
     public static void main(String[] args) {
         /*List<String> list = new LinkedList<>();
+
+        System.out.println("" + list.get(9));
+
         list.add("Privet1");
         list.add("Da2");
         list.add("Net3");
         list.add("Yfhf[j4");
 
-        System.out.println("" + list.get(1));
+        Iterator<String> it = list.iterator();
+        while(it.hasNext()) {
+            System.out.println("" + it.next());
+        }
 
+        System.out.println("---------");
+
+        System.out.println("" + list.get(1));
+        System.out.println("---------");
         System.out.println("" + list.remove(1));
         System.out.println("" + list.get(1));
 
         System.out.println("---------");
 
-        Iterator<String> it = list.iterator();
+        it = list.iterator();
         while(it.hasNext()) {
             System.out.println("" + it.next());
-        }*/
+        }
+        System.out.println("" + list.get(0));*/
 
-        ArrayList arrayList = new ArrayList();
+
+        /*ArrayList arrayList = new ArrayList();
         arrayList.add("Ax1");
         arrayList.add("Ax2");
         arrayList.add("Ax3");
@@ -34,9 +46,10 @@ public class Main {
             System.out.println("" + it.next());
         }
 
-        System.out.println("" + arrayList.get(2));
-        System.out.println("" + arrayList.remove(2));
-        System.out.println("" + arrayList.get(2));
+        System.out.println("" + arrayList.get(1));
+        System.out.println("==========");
+        System.out.println("" + arrayList.remove(1));
+        System.out.println("" + arrayList.get(1));*/
 
        //Стек
       /*  Stack<String> list = new LinkedList<>();
@@ -50,16 +63,19 @@ public class Main {
 
 
         //Очередь
-        /*Queue<String> ql =new LinkedList<>();
+        Queue<String> ql =new LinkedList<>();
+
+        System.out.println("" + ql.take());
 
         ql.add("Privet1");
         ql.add("Da2");
         ql.add("Net3");
         ql.add("Yfhf[j4");
 
-        System.out.println("" + ql.take().toString());
-        System.out.println("" + ql.take().toString());*/
-
-
+        System.out.println("" + ql.take());
+        System.out.println("" + ql.take());
+        System.out.println("" + ql.take());
+        System.out.println("" + ql.take());
+        System.out.println("" + ql.take());
     }
 }

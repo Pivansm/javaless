@@ -149,6 +149,7 @@ public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
     @Override
     public T pop() {
         // TODO implement.
+        if(head == null) return null;
         Item<T> node = head;
         if(node != null) {
             head = node.next;

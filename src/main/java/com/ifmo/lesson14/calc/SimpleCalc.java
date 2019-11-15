@@ -39,6 +39,15 @@ public class SimpleCalc {
 
             String line = scanner.nextLine();
 
+            try
+            {
+                parsPermn(line);
+            }
+            catch (Exception e)
+            {
+                System.out.print("Кривая переменная!");
+            }
+
             if ("exit".equals(line))
                 break;
 
