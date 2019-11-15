@@ -68,7 +68,7 @@ public class ArrayList<T> implements List<T> {
     @Override
     public T remove(int i) {
         // TODO implement.
-        if(i > values.length || i < 0)   return null;
+        if(i > values.length - 1 || i < 0)   return null;
         Object it = values[i];
         for (int j = i; j<pointer; j++)
             values[i] = values[i+1];
