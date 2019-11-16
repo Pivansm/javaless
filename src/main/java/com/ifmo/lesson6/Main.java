@@ -8,10 +8,13 @@ public class Main {
 
         System.out.println("" + list.get(9));
 
-        list.add("Privet1");
-        list.add("Da2");
-        list.add("Net3");
-        list.add("Yfhf[j4");
+        list.add("Ax1");
+        list.add("Ax2");
+        list.add("Ax3");
+        list.add("Ax4");
+        list.add("Ax5");
+        list.add("Ax6");
+        list.add("Ax7");
 
         Iterator<String> it = list.iterator();
         while(it.hasNext()) {
@@ -22,7 +25,14 @@ public class Main {
 
         System.out.println("" + list.get(1));
         System.out.println("---------");
-        System.out.println("" + list.remove(1));
+        System.out.println("" + list.remove(0));
+        System.out.println("" + list.remove(0));
+        System.out.println("" + list.remove(0));
+        System.out.println("" + list.remove(0));
+        System.out.println("" + list.remove(0));
+        System.out.println("" + list.remove(0));
+        System.out.println("" + list.remove(0));
+
         System.out.println("" + list.get(1));
 
         System.out.println("---------");
@@ -31,10 +41,14 @@ public class Main {
         while(it.hasNext()) {
             System.out.println("" + it.next());
         }
-        System.out.println("" + list.get(0));*/
+        System.out.println("" + list.get(9));
 
+        it = list.iterator();
+        while(it.hasNext()) {
+            System.out.println("" + it.next());
+        }*/
 
-        ArrayList arrayList = new ArrayList(5);
+        /*ArrayList arrayList = new ArrayList(5);
         arrayList.add("Ax1");
         arrayList.add("Ax2");
         arrayList.add("Ax3");
@@ -54,33 +68,45 @@ public class Main {
         System.out.println("" + arrayList.remove(0));
         System.out.println("" + arrayList.remove(0));
         System.out.println("" + arrayList.remove(0));
-        System.out.println("" + arrayList.get(1));
+        System.out.println("" + arrayList.get(1));*/
 
        //Стек
-      /*  Stack<String> list = new LinkedList<>();
+        Stack<String> stack = new LinkedList<>();
 
-        list.push("wtret1");
-        list.push("fgdty2");
-        list.push("fgdty3");
+        stack.push("Ax1");
+        stack.push("Ax2");
+        stack.push("Ax3");
 
-        System.out.println("" + list.pop().toString());
-        System.out.println("" + list.pop().toString());*/
-
+        System.out.println("" + stack.pop());
+        System.out.println("" + stack.pop());
+        System.out.println("" + stack.pop());
+        System.out.println("" + stack.pop());
 
         //Очередь
-        /*Queue<String> ql =new LinkedList<>();
+        Queue<String> ql =new LinkedList<>();
+
+        //System.out.println("" + ql.take());
+
+        ql.add("Ax1");
+        ql.add("Ax2");
+        ql.add("Ax3");
+        ql.add("Ax4");
+        ql.add("Ax5");
+        ql.add("Ax6");
 
         System.out.println("" + ql.take());
+        System.out.println("" + ql.take());
+        System.out.println("" + ql.take());
+        System.out.println("" + ql.take());
+        System.out.println("" + ql.take());
+        System.out.println("" + ql.take());
+        System.out.println("" + ql.take());
+        System.out.println("" + ql.take());
+        System.out.println("" + ql.take());
 
-        ql.add("Privet1");
-        ql.add("Da2");
-        ql.add("Net3");
-        ql.add("Yfhf[j4");
-
-        System.out.println("" + ql.take());
-        System.out.println("" + ql.take());
-        System.out.println("" + ql.take());
-        System.out.println("" + ql.take());
-        System.out.println("" + ql.take());*/
+        /*Iterator<String> it = ql.iterator();
+        while(it.hasNext()) {
+            System.out.println("" + it.next());
+        }*/
     }
 }

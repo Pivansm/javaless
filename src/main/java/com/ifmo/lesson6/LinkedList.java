@@ -11,9 +11,27 @@ public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
     /** Ссылка на первый элемент списка. */
     private Item<T> head;
 
-    public void setNext(Item node) {
-        head.next = node;
+    private Item<T> find(int i) {
+        if (head == null)
+            return null;
+
+        if (i == 0)
+            return head;
+
+        int cnt = 1;
+
+        for (Item<T> prev = head;;) {
+            Item<T> next = prev.next;
+
+            if (next == null)
+                return i < 0 ? prev : null;
+
+            if (cnt++ == i)
+                return next;
+            prev = next;
+        }
     }
+
     /** {@inheritDoc} */
     @Override
     public void add(T val) {
@@ -59,49 +77,28 @@ public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
     @Override
     public T get(int i) {
         // TODO implement.
-        if(head == null) return null;
-        Item<T> f = head;
-        int current = 0;
-        if(i < 0) return null;
-        if(i == 0 && head != null) return head.value;
-        while(current != i) {
-            if(f.next == null) { return null; }
-            f = f.next;
-            current++;
-        }
-        return f.value;
+        Item<T> item = find(i);
+        return item == null ? null : item.value;
     }
 
     /** {@inheritDoc} */
     @Override
     public T remove(int i) {
         // TODO implement.
-        if(head == null) return null;
-        int j = 0;
+        if (head == null) return null;
         if (i == 0) {
             Item<T> h = head;
             head = head.next;
             return h.value;
         }
-        if(head != null) {
 
-            Item<T> h = head;
-            Item<T> r = null;
-            while (true) {
-                 if (h.next != null && j + 1 == i) {
-                     r = h.next;
-                     h.next = h.next.next;
-                     return r.value;
-                  }
-
-                if (h.next == null) break;
-                j++;
-                r = h;
-                h = h.next;
-            }
+        Item<T> prev = find(i - 1);
+        Item<T> cur;
+        if (prev != null && (cur = prev.next) != null) {
+            prev.next = cur.next;
+            return cur.value;
         }
         return null;
-
     }
 
     /** {@inheritDoc} */
