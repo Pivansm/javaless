@@ -36,22 +36,12 @@ public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
     @Override
     public void add(T val) {
         // TODO implement.
-        Item<T> newItem = new Item(val);
         if (head == null) {
-            newItem.next = null;
-            head = newItem;
+            head = new Item(val);
             return;
         }
-        else {
-            Item it = head;
-            while(true) {
-                if(it.next == null) {
-                    it.next = newItem;
-                    return;
-                }
-                it = it.next;
-            }
-        }
+        //noinspection ConstantConditions
+        find(-1).next = new Item(val);
 
     }
 
