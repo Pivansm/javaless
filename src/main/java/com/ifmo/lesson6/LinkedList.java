@@ -123,12 +123,6 @@ public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
         return it;
     }
 
-    public void addTail(T val){
-        if (head.next == null)
-            head.next = new Item(val); //we are at the end, add it
-        else
-            addTail(val);//let the next node take responsibility
-    }
 
     /** {@inheritDoc} */
     //Поместить элемент в стек
