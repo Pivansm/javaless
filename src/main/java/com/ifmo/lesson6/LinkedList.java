@@ -36,10 +36,13 @@ public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
     @Override
     public void add(T val) {
         // TODO implement.
+
         if (head == null) {
             head = new Item(val);
             return;
         }
+
+        //addTail(val);
         //noinspection ConstantConditions
         find(-1).next = new Item(val);
 
@@ -49,18 +52,22 @@ public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
     @Override
     public T take() {
         // TODO implement.
-        if(head == null) return null;
+        if (head == null) return null;
+
         Item<T> p = head, q = null, nex = head.next;
-        if(nex == null) {
-            head = null;
-            return p.value;
-        }
-        while((nex = p.next) != null) {
+        for (;;) {
+            nex = p.next;
+
+            if (nex == null) {
+                if(head.next == null)
+                    head = null;
+                else
+                    q.next = null;
+                return p.value;
+            }
             q = p;
             p = nex;
         }
-        q.next = null;
-        return p.value;
       }
 
     /** {@inheritDoc} */
@@ -114,6 +121,13 @@ public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
             }
         };
         return it;
+    }
+
+    public void addTail(T val){
+        if (head.next == null)
+            head.next = new Item(val); //we are at the end, add it
+        else
+            addTail(val);//let the next node take responsibility
     }
 
     /** {@inheritDoc} */

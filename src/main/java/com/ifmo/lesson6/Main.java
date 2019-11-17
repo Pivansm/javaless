@@ -71,7 +71,7 @@ public class Main {
         System.out.println("" + arrayList.get(1));*/
 
        //Стек
-        Stack<String> stack = new LinkedList<>();
+       /* Stack<String> stack = new LinkedList<>();
 
         stack.push("Ax1");
         stack.push("Ax2");
@@ -80,7 +80,7 @@ public class Main {
         System.out.println("" + stack.pop());
         System.out.println("" + stack.pop());
         System.out.println("" + stack.pop());
-        System.out.println("" + stack.pop());
+        System.out.println("" + stack.pop());*/
 
         //Очередь
         Queue<String> ql =new LinkedList<>();
