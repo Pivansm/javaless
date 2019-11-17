@@ -1,7 +1,13 @@
 package com.ifmo.lesson14.calc;
 
+
+import com.ifmo.lesson7.Book;
+
 import java.text.ParseException;
-import java.util.Scanner;
+//import java.util.Scanner;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+import java.util.*;
 
 /*
  * Добавьте поддержку переменных.
@@ -22,30 +28,66 @@ import java.util.Scanner;
 public class SimpleCalc {
     public static void main(String[] args) {
 
+        Map<String, Integer> map = new HashMap<>();
         Scanner scanner = new Scanner(System.in);
 
-        try
+        Pattern p = Pattern.compile("^([a-zA-Z])+\\s*=\\s*-*\\d+$|^(\\d)+\\s*(\\+|-)+\\s*\\d+$");
+        String ilin = scanner.nextLine();
+        Matcher m = p.matcher(ilin);
+        if(!m.matches()) {
+            System.out.print("Кривая переменная! Имя переменной не может быть числом.");
+        }
+        else
         {
-           parsPermn(scanner.nextLine());
-        }
-        catch (ParseException ex) {
-            System.out.print("Кривая переменная!");
-            ex.printStackTrace();
-        }
+            String[] str1 = ilin.split("=");
+            if(str1.length > 1) {
+                map.put(str1[0].replace(" ", ""), Integer.parseInt(str1[1].replace(" ", "")));
+                System.out.println("Answer is: " + str1[1]);
+             }
+            else
+            {
+                try {
+                    System.out.println("Answer is: " + calculate(ilin));
+                }
+                catch (CalcException e) {
+                    System.err.println("Error occurred: ");
 
+                    e.printStackTrace();
+                }
+            }
+
+        }
 
         while (true) {
             System.out.println("Enter expression: ");
 
             String line = scanner.nextLine();
 
-            try
-            {
-                parsPermn(line);
+            p = Pattern.compile("^([a-zA-Z])+\\s*(=|\\+|-)+\\s*\\d+$|^(\\d)*\\s*(\\+|-)+\\s*\\d+$||([a-zA-Z])+\\s*(\\+|-)+\\s*([a-zA-Z])+$|exit");
+            m = p.matcher(line);
+            if(!m.matches()) {
+                System.out.print("Кривая переменная! Имя переменной не может быть числом.");
             }
-            catch (Exception e)
-            {
-                System.out.print("Кривая переменная!");
+            else {
+                p = Pattern.compile("^([a-zA-Z])+\\s*=+\\s*-*\\d+$");
+                m = p.matcher(line);
+                if(m.matches()) {
+                    String[] str2 = line.split("=");
+                    if (str2.length > 1) {
+                        map.put(str2[0].replace(" ", ""), Integer.parseInt(str2[1].replace(" ", "")));
+                        continue;
+                    }
+                }
+                p = Pattern.compile("^([a-zA-Z])+\\s*(\\+|-)+\\s*\\d+$|^([a-zA-Z])+\\s*(\\+|-)+\\s*([a-zA-Z])+$");
+                m = p.matcher(line);
+                if(m.matches()) {
+                    for(Map.Entry<String, Integer> item : map.entrySet()) {
+                        String prmt = item.getKey();
+                        int cntBook = item.getValue();
+                        line = line.replace(prmt, "" + cntBook);
+                    }
+                }
+
             }
 
             if ("exit".equals(line))
