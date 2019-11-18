@@ -31,7 +31,7 @@ public class SimpleCalc {
         Map<String, Integer> map = new HashMap<>();
         Scanner scanner = new Scanner(System.in);
 
-        Pattern p = Pattern.compile("^([a-zA-Z])+\\s*=\\s*-*\\d+$|^(\\d)+\\s*(\\+|-)+\\s*\\d+$");
+        Pattern p = Pattern.compile("^([a-zA-Z])+\\d*\\s*=\\s*-*\\d+$|^(\\d)+\\s*(\\+|-)+\\s*\\d+$");
         String ilin = scanner.nextLine();
         Matcher m = p.matcher(ilin);
         if(!m.matches()) {
@@ -63,14 +63,14 @@ public class SimpleCalc {
 
             String line = scanner.nextLine();
 
-            p = Pattern.compile("^([a-zA-Z])+\\s*(=|\\+|-)+\\s*\\d+$|^(\\d)*\\s*(\\+|-)+\\s*\\d+$||([a-zA-Z])+\\s*(\\+|-)+\\s*([a-zA-Z])+$|exit");
+            p = Pattern.compile("^([a-zA-Z])+\\d*\\s*(=|\\+|-)+\\s*\\d+$|^(\\d)*\\s*(\\+|-)+\\s*\\d+$||([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*([a-zA-Z])+\\d*$|exit");
             m = p.matcher(line);
             if(!m.matches()) {
                 System.out.print("Кривая переменная или значение!");
                 continue;
             }
             else {
-                p = Pattern.compile("^([a-zA-Z])+\\s*=+\\s*-*\\d+$");
+                p = Pattern.compile("^([a-zA-Z])+\\d*\\s*=+\\s*-*\\d+$");
                 m = p.matcher(line);
                 if(m.matches()) {
                     String[] str2 = line.split("=");
@@ -79,7 +79,7 @@ public class SimpleCalc {
                         continue;
                     }
                 }
-                p = Pattern.compile("^([a-zA-Z])+\\s*(\\+|-)+\\s*\\d+$|^([a-zA-Z])+\\s*(\\+|-)+\\s*([a-zA-Z])+$");
+                p = Pattern.compile("^([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*\\d+$|^([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*([a-zA-Z])+\\d*$");
                 m = p.matcher(line);
                 if(m.matches()) {
                     boolean flgfnd = false;
