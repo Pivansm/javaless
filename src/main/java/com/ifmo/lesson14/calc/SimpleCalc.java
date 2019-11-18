@@ -63,10 +63,10 @@ public class SimpleCalc {
 
             String line = scanner.nextLine();
 
-            p = Pattern.compile("^([a-zA-Z])+\\d*\\s*(=|\\+|-)+\\s*\\d+$|^(\\d)*\\s*(\\+|-)+\\s*\\d+$||([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*([a-zA-Z])+\\d*$|exit");
+            p = Pattern.compile("^([a-zA-Z])+\\d*\\s*(=|\\+|-)+\\s*-*\\d+$|^(\\d)*\\s*(\\+|-)+\\s*\\d+$|([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*([a-zA-Z])+\\d*$|exit");
             m = p.matcher(line);
             if(!m.matches()) {
-                System.out.print("Кривая переменная или значение!");
+                System.out.println("Кривая переменная или значение!");
                 continue;
             }
             else {
@@ -82,12 +82,13 @@ public class SimpleCalc {
                 p = Pattern.compile("^([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*\\d+$|^([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*([a-zA-Z])+\\d*$");
                 m = p.matcher(line);
                 if(m.matches()) {
-                    boolean flgfnd = false;
-                    for(Map.Entry<String, Integer> item : map.entrySet()) {
-                        String prmt = item.getKey();
-                        int cntBook = item.getValue();
-                        line = line.replace(prmt, "" + cntBook);
-                    }
+                    String[] operands = line.split(" ");
+
+                    if(map.containsKey(operands[0])) operands[0] = map.get(operands[0]).toString();
+                    if(map.containsKey(operands[2])) operands[2] = map.get(operands[2]).toString();
+
+                    line = operands[0] + " " + operands[1] + " " + operands[2];
+                    //System.out.println(": " + line);
                     p = Pattern.compile("([a-zA-Z])+");
                     m = p.matcher(line);
                     if(m.find()) {
@@ -113,9 +114,12 @@ public class SimpleCalc {
         }
     }
 
-    private static void parsPermn(String scan) throws ParseException
+    private void parsLine(String scan) throws ParseException
     {
-         if(scan.length() == 0)  throw new ParseException("Errvff", 0);
+         if(scan.length() == 0)  throw new ParseException("Пустая строка", 0);
+
+         String[] operands = scan.split(" ");
+
          String os = scan.replace(" ", "");
          boolean flg = false;
          int oui = 0;
