@@ -66,7 +66,8 @@ public class SimpleCalc {
             p = Pattern.compile("^([a-zA-Z])+\\s*(=|\\+|-)+\\s*\\d+$|^(\\d)*\\s*(\\+|-)+\\s*\\d+$||([a-zA-Z])+\\s*(\\+|-)+\\s*([a-zA-Z])+$|exit");
             m = p.matcher(line);
             if(!m.matches()) {
-                System.out.print("Кривая переменная! Имя переменной не может быть числом.");
+                System.out.print("Кривая переменная или значение!");
+                continue;
             }
             else {
                 p = Pattern.compile("^([a-zA-Z])+\\s*=+\\s*-*\\d+$");
@@ -81,11 +82,19 @@ public class SimpleCalc {
                 p = Pattern.compile("^([a-zA-Z])+\\s*(\\+|-)+\\s*\\d+$|^([a-zA-Z])+\\s*(\\+|-)+\\s*([a-zA-Z])+$");
                 m = p.matcher(line);
                 if(m.matches()) {
+                    boolean flgfnd = false;
                     for(Map.Entry<String, Integer> item : map.entrySet()) {
                         String prmt = item.getKey();
                         int cntBook = item.getValue();
                         line = line.replace(prmt, "" + cntBook);
                     }
+                    p = Pattern.compile("([a-zA-Z])+");
+                    m = p.matcher(line);
+                    if(m.find()) {
+                        System.out.println("Нет переменной: '" + m.group() + "'");
+                        continue;
+                    }
+
                 }
 
             }

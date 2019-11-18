@@ -71,19 +71,25 @@ public class Main {
         System.out.println("" + arrayList.get(1));*/
 
        //Стек
-       /* Stack<String> stack = new LinkedList<>();
+        Stack<String> stack = new LinkedList<>();
+
+        System.out.println("" + stack.pop());
 
         stack.push("Ax1");
         stack.push("Ax2");
         stack.push("Ax3");
+        stack.push("Ax4");
+        stack.push("Ax5");
 
         System.out.println("" + stack.pop());
         System.out.println("" + stack.pop());
         System.out.println("" + stack.pop());
-        System.out.println("" + stack.pop());*/
+        System.out.println("" + stack.pop());
+        System.out.println("" + stack.pop());
+        System.out.println("" + stack.pop());
 
         //Очередь
-        Queue<String> ql =new LinkedList<>();
+        /*Queue<String> ql =new LinkedList<>();
 
         //System.out.println("" + ql.take());
 
@@ -102,7 +108,7 @@ public class Main {
         System.out.println("" + ql.take());
         System.out.println("" + ql.take());
         System.out.println("" + ql.take());
-        System.out.println("" + ql.take());
+        System.out.println("" + ql.take());*/
 
         /*Iterator<String> it = ql.iterator();
         while(it.hasNext()) {

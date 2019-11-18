@@ -36,7 +36,6 @@ public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
     @Override
     public void add(T val) {
         // TODO implement.
-
         if (head == null) {
             head = new Item(val);
             return;
