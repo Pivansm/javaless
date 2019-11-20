@@ -1,8 +1,6 @@
 package com.ifmo.lesson16.print;
 
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.io.OutputStream;
+import java.io.*;
 import java.net.*;
 import java.util.Enumeration;
 import java.util.Scanner;
@@ -77,9 +75,18 @@ public class PrintClient {
         try (Socket sock = new Socket()) {
             sock.connect(serverAddr);
 
-            try (OutputStream out = sock.getOutputStream()) {
+            try (OutputStream out = sock.getOutputStream(); InputStream in = sock.getInputStream()) {
                 ObjectOutputStream objOut = new ObjectOutputStream(out);
 
+                try(ObjectInputStream odjMs = new ObjectInputStream(in)) {
+
+                    //Object inkln = odjMs.readObject()
+
+                }
+
+                //for(int i = 0; i<5; i++) {
+
+                //}
                 objOut.writeObject(msg);
 
                 objOut.flush();

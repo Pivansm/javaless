@@ -12,6 +12,7 @@ public class IOStreamTasks {
     public static void main(String[] args) throws IOException {
        File src = new File("C:\\JavaLess\\src\\main\\java\\resources\\wap.txt");
        File dst = new File("C:\\JavaLess\\src\\main\\java\\resources\\wap_copy.txt");
+       File key = new File("C:\\JavaLess\\src\\main\\java\\resources\\wap_key.txt");
 
        //try(InputStream in = new FileInputStream(src); OutputStream out = new FileOutputStream(dst)) {
        //     copy(in, out);
@@ -22,10 +23,12 @@ public class IOStreamTasks {
 
         //assembly(cuFl, dst);
 
-        try(InputStream in = new FileInputStream(src); OutputStream out = new FileOutputStream(dst)) {
-            encrypt(in, out, "helloy");
-            //encrypt(in, out, "helloy");
-        }
+        //try(InputStream in = new FileInputStream(src); OutputStream out = new FileOutputStream(dst)) {
+        //    encrypt(in, out, "helloy");
+        //    //encrypt(in, out, "helloy");
+        //}
+
+        encrypt(src, dst, key);
 
     }
 
@@ -106,7 +109,7 @@ public class IOStreamTasks {
                          in.close();
                      }
 
-                     fl.delete();
+                     //fl.delete();
                  }
              }
          }

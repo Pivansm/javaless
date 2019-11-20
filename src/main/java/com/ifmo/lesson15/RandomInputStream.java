@@ -1,5 +1,6 @@
 package com.ifmo.lesson15;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Random;
@@ -20,6 +21,7 @@ public class RandomInputStream extends InputStream {
     @Override
     public int read() throws IOException {
         // TODO implement
-        return 0;
-    }
+        Random ran = new Random();
+         return ran.nextInt((int) length);
+     }
 }

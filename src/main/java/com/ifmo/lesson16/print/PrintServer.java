@@ -2,6 +2,7 @@ package com.ifmo.lesson16.print;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -47,6 +48,12 @@ public class PrintServer {
              OutputStream out = sock.getOutputStream()) {
             Object obj = objIn.readObject();
 
+            ObjectOutputStream objKln = new ObjectOutputStream(out);
+            Object inobj = objIn.readObject();
+            if(inobj.equals("ping/")) {
+               System.out.print("ping/");
+            }
+
             printMessage((Message) obj, host);
         }
         catch (IOException | ClassNotFoundException | RuntimeException e) {
@@ -63,10 +70,11 @@ public class PrintServer {
     }
 
     public static void main(String[] args) throws IOException {
-        if (args == null || args.length == 0)
-            throw new IllegalArgumentException("Port must be specified");
+        //if (args == null || args.length == 0)
+        //    throw new IllegalArgumentException("Port must be specified");
 
-        int port = Integer.parseInt(args[0]);
+        //int port = Integer.parseInt(args[0]);
+        int port = 12345;
 
         PrintServer printServer = new PrintServer(port);
 

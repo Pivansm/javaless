@@ -22,6 +22,18 @@ public class SawInputStream extends InputStream {
     @Override
     public int read() throws IOException {
         // TODO implement
+
+
+        for(int i = 0; i<length; i++)
+        {
+            byte[] buf = new byte[amplitude*2];
+            for(int j = 0; j < amplitude; j++)
+            {
+                //
+            }
+
+
+        }
         return 0;
     }
 }
