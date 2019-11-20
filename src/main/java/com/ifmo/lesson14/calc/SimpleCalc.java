@@ -30,29 +30,27 @@ public class SimpleCalc {
 
         Map<String, Integer> map = new HashMap<>();
         Scanner scanner = new Scanner(System.in);
-        String startLine = scanner.nextLine();
+        /*String startLine = scanner.nextLine();
         try {
-            String curr = parsLine(startLine, map);
+            startLine = parsLine(startLine, map);
         }
         catch (ParseException ex)
         {
             System.out.println("Неправильная переменная : " + startLine);
             ex.printStackTrace();
-        }
-
+        }*/
 
         while (true) {
             System.out.println("Enter expression: ");
 
             String line = scanner.nextLine();
-
             try {
                 line = parsLine(line, map);
                 if(line.contains("=")) continue;
             }
             catch (ParseException ex)
             {
-                System.out.println("Неправильная переменная : " + startLine);
+                System.out.println("Неправильная переменная : " + line);
                 ex.printStackTrace();
                 continue;
             }
@@ -161,7 +159,7 @@ public class SimpleCalc {
              }
              else
              {
-                 throw new ParseException("Нет переменной: '" + m.group() + "'", 0);
+                 throw new ParseException("Нет переменной в строке : '" + scan + "'", 0);
              }
 
          }
