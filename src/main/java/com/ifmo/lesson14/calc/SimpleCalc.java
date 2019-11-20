@@ -30,74 +30,31 @@ public class SimpleCalc {
 
         Map<String, Integer> map = new HashMap<>();
         Scanner scanner = new Scanner(System.in);
-
-        Pattern p = Pattern.compile("^([a-zA-Z])+\\d*\\s*=\\s*-*\\d+$|^(\\d)+\\s*(\\+|-)+\\s*\\d+$");
-        String ilin = scanner.nextLine();
-        Matcher m = p.matcher(ilin);
-        if(!m.matches()) {
-            System.out.print("Кривая переменная! Имя переменной не может быть числом.");
+        String startLine = scanner.nextLine();
+        try {
+            String curr = parsLine(startLine, map);
         }
-        else
+        catch (ParseException ex)
         {
-            String[] str1 = ilin.split("=");
-            if(str1.length > 1) {
-                map.put(str1[0].replace(" ", ""), Integer.parseInt(str1[1].replace(" ", "")));
-                System.out.println("Answer is: " + str1[1]);
-             }
-            else
-            {
-                try {
-                    System.out.println("Answer is: " + calculate(ilin));
-                }
-                catch (CalcException e) {
-                    System.err.println("Error occurred: ");
-
-                    e.printStackTrace();
-                }
-            }
-
+            System.out.println("Неправильная переменная : " + startLine);
+            ex.printStackTrace();
         }
+
 
         while (true) {
             System.out.println("Enter expression: ");
 
             String line = scanner.nextLine();
 
-            p = Pattern.compile("^([a-zA-Z])+\\d*\\s*(=|\\+|-)+\\s*-*\\d+$|^(\\d)*\\s*(\\+|-)+\\s*\\d+$|([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*([a-zA-Z])+\\d*$|exit");
-            m = p.matcher(line);
-            if(!m.matches()) {
-                System.out.println("Кривая переменная или значение!");
-                continue;
+            try {
+                line = parsLine(line, map);
+                if(line.contains("=")) continue;
             }
-            else {
-                p = Pattern.compile("^([a-zA-Z])+\\d*\\s*=+\\s*-*\\d+$");
-                m = p.matcher(line);
-                if(m.matches()) {
-                    String[] str2 = line.split("=");
-                    if (str2.length > 1) {
-                        map.put(str2[0].replace(" ", ""), Integer.parseInt(str2[1].replace(" ", "")));
-                        continue;
-                    }
-                }
-                p = Pattern.compile("^([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*\\d+$|^([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*([a-zA-Z])+\\d*$");
-                m = p.matcher(line);
-                if(m.matches()) {
-                    String[] operands = line.split(" ");
-
-                    if(map.containsKey(operands[0])) operands[0] = map.get(operands[0]).toString();
-                    if(map.containsKey(operands[2])) operands[2] = map.get(operands[2]).toString();
-
-                    line = operands[0] + " " + operands[1] + " " + operands[2];
-                    //System.out.println(": " + line);
-                    p = Pattern.compile("([a-zA-Z])+");
-                    m = p.matcher(line);
-                    if(m.find()) {
-                        System.out.println("Нет переменной: '" + m.group() + "'");
-                        continue;
-                    }
-
-                }
-
+            catch (ParseException ex)
+            {
+                System.out.println("Неправильная переменная : " + startLine);
+                ex.printStackTrace();
+                continue;
             }
 
             if ("exit".equals(line))
@@ -114,46 +71,124 @@ public class SimpleCalc {
         }
     }
 
-    private void parsLine(String scan) throws ParseException
+    private void parsLineRegx(String scan, Map map) throws ParseException
     {
-         if(scan.length() == 0)  throw new ParseException("Пустая строка", 0);
+        Pattern p = Pattern.compile("^([a-zA-Z])+\\d*\\s*=\\s*-*\\d+$|^(\\d)+\\s*(\\+|-)+\\s*\\d+$");
+
+        Matcher m = p.matcher(scan);
+        if(!m.matches()) {
+            System.out.print("Кривая переменная! Имя переменной не может быть числом.");
+        }
+        else
+        {
+            String[] str1 = scan.split("=");
+            if(str1.length > 1) {
+                map.put(str1[0].replace(" ", ""), Integer.parseInt(str1[1].replace(" ", "")));
+                System.out.println("Answer is: " + str1[1]);
+            }
+            else
+            {
+                try {
+                    System.out.println("Answer is: " + calculate(scan));
+                }
+                catch (CalcException e) {
+                    System.err.println("Error occurred: ");
+
+                    e.printStackTrace();
+                }
+            }
+
+        }
+    }
+
+    private void parsLineRgx2(String scan, Map map ) {
+        Pattern p = Pattern.compile("^([a-zA-Z])+\\d*\\s*(=|\\+|-)+\\s*-*\\d+$|^(\\d)*\\s*(\\+|-)+\\s*\\d+$|([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*([a-zA-Z])+\\d*$|exit");
+        Matcher m = p.matcher(scan);
+        if(!m.matches()) {
+            System.out.println("Кривая переменная или значение!");
+            //return null;
+        }
+        else {
+            p = Pattern.compile("^([a-zA-Z])+\\d*\\s*=+\\s*-*\\d+$");
+            m = p.matcher(scan);
+            if(m.matches()) {
+                String[] str2 = scan.split("=");
+                if (str2.length > 1) {
+                    map.put(str2[0].replace(" ", ""), Integer.parseInt(str2[1].replace(" ", "")));
+                }
+            }
+            p = Pattern.compile("^([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*\\d+$|^([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*([a-zA-Z])+\\d*$");
+            m = p.matcher(scan);
+            if(m.matches()) {
+                String[] operands = scan.split(" ");
+
+                if(map.containsKey(operands[0])) operands[0] = map.get(operands[0]).toString();
+                if(map.containsKey(operands[2])) operands[2] = map.get(operands[2]).toString();
+
+                scan = operands[0] + " " + operands[1] + " " + operands[2];
+                //System.out.println(": " + line);
+                p = Pattern.compile("([a-zA-Z])+");
+                m = p.matcher(scan);
+                if(m.find()) {
+                    System.out.println("Нет переменной: '" + m.group() + "'");
+                    //continue;
+                }
+
+            }
+
+        }
+    }
+
+    private static String parsLine(String scan, Map map) throws ParseException
+    {
+        int oui = 0;
+        Pattern p;
+        Matcher m;
+        if(scan.length() == 0)  throw new ParseException("Пустая строка", 0);
 
          String[] operands = scan.split(" ");
-
-         String os = scan.replace(" ", "");
-         boolean flg = false;
-         int oui = 0;
-         String cif = "0";
-        if (os.contains("=")) {
-
-        for(int i = 0; i<os.length(); i++)
+         if(operands[1].contains("="))
          {
-             if(Character.isDigit(os.charAt(0))) {
-                 throw new ParseException("Errvff", 0);
-             }
+             p = Pattern.compile("([a-zA-Z])+");
+             m = p.matcher(operands[0]);
+             if(m.find()) {
 
-             if(flg) {
-                 cif = os.substring(i, os.length());
-                 break;
-             }
+                 oui = Integer.parseInt(operands[2].replace(" ", ""));
 
-             if(os.charAt(i) == '=')  flg = true;
+                 map.put(operands[0].replace(" ", ""), oui);
+                 System.out.println("Answer is: " + oui);
+                 return scan;
+             }
+             else
+             {
+                 throw new ParseException("Нет переменной: '" + m.group() + "'", 0);
+             }
 
          }
+         else
+         {
+             p = Pattern.compile("^([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*\\d+$|^([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*([a-zA-Z])+\\d*$");
+             m = p.matcher(scan);
+             if(m.matches()) {
+                 String[] str2 = scan.split(" ");
 
-        }
+                 if(map.containsKey(str2[0])) str2[0] = map.get(str2[0]).toString();
+                 if(map.containsKey(str2[2])) str2[2] = map.get(str2[2]).toString();
 
-        try
-        {
-            oui = Integer.parseInt(cif);
-            System.out.println("Asnswer is: " + cif);
-        }
-        catch (Exception ex)
-        {
-            System.out.print("кривое значение");
-        }
+                 scan = str2[0] + " " + str2[1] + " " + str2[2];
+                 //System.out.println(": " + line);
+                 p = Pattern.compile("([a-zA-Z])+");
+                 m = p.matcher(scan);
+                 if(m.find()) {
+                     throw new ParseException("Нет переменной: '" + m.group() + "'", 0);
+                  }
 
+                 return scan;
 
+             }
+         }
+
+        return scan;
     }
 
     static int calculate(String line) throws CalcException {
