@@ -30,15 +30,6 @@ public class SimpleCalc {
 
         Map<String, Integer> map = new HashMap<>();
         Scanner scanner = new Scanner(System.in);
-        /*String startLine = scanner.nextLine();
-        try {
-            startLine = parsLine(startLine, map);
-        }
-        catch (ParseException ex)
-        {
-            System.out.println("Неправильная переменная : " + startLine);
-            ex.printStackTrace();
-        }*/
 
         while (true) {
             System.out.println("Enter expression: ");
@@ -69,73 +60,6 @@ public class SimpleCalc {
         }
     }
 
-    private void parsLineRegx(String scan, Map map) throws ParseException
-    {
-        Pattern p = Pattern.compile("^([a-zA-Z])+\\d*\\s*=\\s*-*\\d+$|^(\\d)+\\s*(\\+|-)+\\s*\\d+$");
-
-        Matcher m = p.matcher(scan);
-        if(!m.matches()) {
-            System.out.print("Кривая переменная! Имя переменной не может быть числом.");
-        }
-        else
-        {
-            String[] str1 = scan.split("=");
-            if(str1.length > 1) {
-                map.put(str1[0].replace(" ", ""), Integer.parseInt(str1[1].replace(" ", "")));
-                System.out.println("Answer is: " + str1[1]);
-            }
-            else
-            {
-                try {
-                    System.out.println("Answer is: " + calculate(scan));
-                }
-                catch (CalcException e) {
-                    System.err.println("Error occurred: ");
-
-                    e.printStackTrace();
-                }
-            }
-
-        }
-    }
-
-    private void parsLineRgx2(String scan, Map map ) {
-        Pattern p = Pattern.compile("^([a-zA-Z])+\\d*\\s*(=|\\+|-)+\\s*-*\\d+$|^(\\d)*\\s*(\\+|-)+\\s*\\d+$|([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*([a-zA-Z])+\\d*$|exit");
-        Matcher m = p.matcher(scan);
-        if(!m.matches()) {
-            System.out.println("Кривая переменная или значение!");
-            //return null;
-        }
-        else {
-            p = Pattern.compile("^([a-zA-Z])+\\d*\\s*=+\\s*-*\\d+$");
-            m = p.matcher(scan);
-            if(m.matches()) {
-                String[] str2 = scan.split("=");
-                if (str2.length > 1) {
-                    map.put(str2[0].replace(" ", ""), Integer.parseInt(str2[1].replace(" ", "")));
-                }
-            }
-            p = Pattern.compile("^([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*\\d+$|^([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*([a-zA-Z])+\\d*$");
-            m = p.matcher(scan);
-            if(m.matches()) {
-                String[] operands = scan.split(" ");
-
-                if(map.containsKey(operands[0])) operands[0] = map.get(operands[0]).toString();
-                if(map.containsKey(operands[2])) operands[2] = map.get(operands[2]).toString();
-
-                scan = operands[0] + " " + operands[1] + " " + operands[2];
-                //System.out.println(": " + line);
-                p = Pattern.compile("([a-zA-Z])+");
-                m = p.matcher(scan);
-                if(m.find()) {
-                    System.out.println("Нет переменной: '" + m.group() + "'");
-                    //continue;
-                }
-
-            }
-
-        }
-    }
 
     private static String parsLine(String scan, Map map) throws ParseException
     {
@@ -145,13 +69,20 @@ public class SimpleCalc {
         if(scan.length() == 0)  throw new ParseException("Пустая строка", 0);
 
          String[] operands = scan.split(" ");
-         if(operands[1].contains("="))
+         if(operands.length > 1 && operands[1].contains("="))
          {
              p = Pattern.compile("([a-zA-Z])+");
              m = p.matcher(operands[0]);
              if(m.find()) {
 
-                 oui = Integer.parseInt(operands[2].replace(" ", ""));
+                 try {
+                     oui = Integer.parseInt(operands[2].replace(" ", ""));
+                 }
+                 catch (Exception e)
+                 {
+                     System.out.println("Неверное значение в строке : '" + scan + "'");
+                     throw new ParseException("Неверное значение в строке : '" + scan + "'", 0);
+                 }
 
                  map.put(operands[0].replace(" ", ""), oui);
                  System.out.println("Answer is: " + oui);
