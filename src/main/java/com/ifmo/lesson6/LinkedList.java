@@ -51,9 +51,9 @@ public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
     @Override
     public T take() {
         // TODO implement.
-        if (head == null) return null;
+        //if (head == null) return null;
 
-        Item<T> p = head, q = null, nex = head.next;
+        /*Item<T> p = head, q = null, nex = head.next;
         for (;;) {
             nex = p.next;
 
@@ -66,7 +66,15 @@ public class LinkedList<T> implements List<T>, Stack<T>, Queue<T> {
             }
             q = p;
             p = nex;
+        }*/
+        if(head == null) return null;
+        Item<T> node = head;
+        if(node != null) {
+            head = node.next;
+            //if(head.next != null) { head.next = null; }
+            return node.value;
         }
+        return null;
       }
 
     /** {@inheritDoc} */
