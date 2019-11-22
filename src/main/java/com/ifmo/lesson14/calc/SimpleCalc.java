@@ -84,6 +84,13 @@ public class SimpleCalc {
             if(map.containsKey(str1[0])) str1[0] = map.get(str1[0]).toString();
             if(map.containsKey(str1[2])) str1[2] = map.get(str1[2]).toString();
             scan = str1[0] + " " + str1[1] + " " + str1[2];
+            try {
+                int param = Integer.parseInt(str1[0]);
+
+            } catch (NumberFormatException ex)
+            {
+                throw new ParseException("Параметр не должен быть целым числом! " + scan, 0);
+            }
         }
 
         return scan;
