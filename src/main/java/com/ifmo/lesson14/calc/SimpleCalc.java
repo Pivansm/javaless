@@ -77,7 +77,6 @@ public class SimpleCalc {
                  System.out.print("");
             }
             map.put(str1[0], Integer.parseInt(str1[2]));
-            System.out.println("Answer is: " + str1[2]);
             return scan;
         }
         else
@@ -157,19 +156,23 @@ public class SimpleCalc {
     }
 
     static int calculate(String line) throws CalcException {
-         /*try {
+         try {
                 line = parsLine2(line, map);
-                if(line.contains("=")) return 0;
+                if(line.contains("=")) {
+                    String[] str2 = line.split(" ");
+                    line = "0" + " " + "+" + " " + str2[2];
+                }
             }
             catch (ParseException ex) {
                 System.out.println("Неправильная переменная : " + line);
                 throw new CalcException("Expression must contain '+' or '-': " + line);
-            }*/
+            }
         //if(line.contains("=")) throw new CalcException("Expression must contain '+' or '-': " + line);
-        if(line.matches("^([a-zA-Z])+\\d*\\s*=+\\s*-*\\d+$")) {
+        /*if(line.matches("^([a-zA-Z])+\\d*\\s*=+\\s*-*\\d+$")) {
             String[] str2 = line.split(" ");
+            map.put(str2[0], str2[2]);
             line = "0" + " " + "+" + " " + str2[2];
-        }
+        }*/
 
         if (!line.contains("+") && !line.contains("-"))
             throw new CalcException("Expression must contain '+' or '-': " + line);
