@@ -1,8 +1,6 @@
 package com.ifmo.lesson14.calc;
 
 
-import com.ifmo.lesson7.Book;
-
 import java.text.ParseException;
 //import java.util.Scanner;
 import java.util.regex.Pattern;
@@ -35,7 +33,7 @@ public class SimpleCalc {
             System.out.println("Enter expression: ");
 
             String line = scanner.nextLine();
-            try {
+           /* try {
                 line = parsLine(line, map);
                 if(line.contains("=")) continue;
             }
@@ -44,6 +42,33 @@ public class SimpleCalc {
                 System.out.println("Неправильная переменная : " + line);
                 ex.printStackTrace();
                 continue;
+            }*/
+
+            if (line.contains("=")) {
+
+                String[] str1 = line.split(" ");
+                try {
+                    int param = Integer.parseInt(str1[0]);
+                    System.out.print("Параметр не должен быть целым числом!");
+                    continue;
+
+                } catch (NumberFormatException ex)
+                {
+                    //
+                    System.out.print("");
+                }
+
+                map.put(str1[0], Integer.parseInt(str1[2]));
+                System.out.println("Answer is: " + str1[2]);
+
+                continue;
+            }
+            else
+            {
+                String[] str2 = line.split(" ");
+                if(map.containsKey(str2[0])) str2[0] = map.get(str2[0]).toString();
+                if(map.containsKey(str2[2])) str2[2] = map.get(str2[2]).toString();
+                line = str2[0] + " " + str2[1] + " " + str2[2];
             }
 
             if ("exit".equals(line))
@@ -54,7 +79,6 @@ public class SimpleCalc {
             }
             catch (CalcException e) {
                 System.err.println("Error occurred: ");
-
                 e.printStackTrace();
             }
         }
