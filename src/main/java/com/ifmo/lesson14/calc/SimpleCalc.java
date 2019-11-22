@@ -24,9 +24,12 @@ import java.util.*;
  * если имя переменной не найдено или использовался неверный синтаксис.
  */
 public class SimpleCalc {
+
+    private static Map<String, Integer> map;
+
     public static void main(String[] args) {
 
-        Map<String, Integer> map = new HashMap<>();
+        map = new HashMap<>();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
@@ -44,34 +47,7 @@ public class SimpleCalc {
                 continue;
             }*/
 
-            if (line.contains("=")) {
-
-                String[] str1 = line.split(" ");
-                try {
-                    int param = Integer.parseInt(str1[0]);
-                    System.out.print("Параметр не должен быть целым числом!");
-                    continue;
-
-                } catch (NumberFormatException ex)
-                {
-                    //
-                    System.out.print("");
-                }
-
-                map.put(str1[0], Integer.parseInt(str1[2]));
-                System.out.println("Answer is: " + str1[2]);
-
-                continue;
-            }
-            else
-            {
-                String[] str2 = line.split(" ");
-                if(map.containsKey(str2[0])) str2[0] = map.get(str2[0]).toString();
-                if(map.containsKey(str2[2])) str2[2] = map.get(str2[2]).toString();
-                line = str2[0] + " " + str2[1] + " " + str2[2];
-            }
-
-            if ("exit".equals(line))
+             if ("exit".equals(line))
                 break;
 
             try {
@@ -84,6 +60,33 @@ public class SimpleCalc {
         }
     }
 
+    /*private static String parsLine2(String scan, Map map) throws ParseException {
+
+            String[] str1 = scan.split(" ");
+            try {
+                int param = Integer.parseInt(str1[0]);
+                System.out.print("Параметр не должен быть целым числом!");
+                continue;
+
+            } catch (NumberFormatException ex)
+            {
+                 System.out.print("");
+            }
+
+            map.put(str1[0], Integer.parseInt(str1[2]));
+            System.out.println("Answer is: " + str1[2]);
+
+            continue;
+        }
+        else
+        {
+            String[] str2 = line.split(" ");
+            if(map.containsKey(str2[0])) str2[0] = map.get(str2[0]).toString();
+            if(map.containsKey(str2[2])) str2[2] = map.get(str2[2]).toString();
+            line = str2[0] + " " + str2[1] + " " + str2[2];
+        }
+
+    }*/
 
     private static String parsLine(String scan, Map map) throws ParseException
     {
@@ -145,6 +148,15 @@ public class SimpleCalc {
     }
 
     static int calculate(String line) throws CalcException {
+         try {
+                line = parsLine(line, map);
+                if(line.contains("=")) return 0;
+            }
+            catch (ParseException ex) {
+                System.out.println("Неправильная переменная : " + line);
+                throw new CalcException("Expression must contain '+' or '-': " + line);
+            }
+
         if (!line.contains("+") && !line.contains("-"))
             throw new CalcException("Expression must contain '+' or '-': " + line);
 
