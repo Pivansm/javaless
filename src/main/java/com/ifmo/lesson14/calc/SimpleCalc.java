@@ -36,8 +36,11 @@ public class SimpleCalc {
             System.out.println("Enter expression: ");
 
             String line = scanner.nextLine();
-           /* try {
-                line = parsLine(line, map);
+            if ("exit".equals(line))
+                break;
+
+            try {
+                line = parsLine2(line, map);
                 if(line.contains("=")) continue;
             }
             catch (ParseException ex)
@@ -45,10 +48,7 @@ public class SimpleCalc {
                 System.out.println("Неправильная переменная : " + line);
                 ex.printStackTrace();
                 continue;
-            }*/
-
-             if ("exit".equals(line))
-                break;
+            }
 
             try {
                 System.out.println("Answer is: " + calculate(line));
@@ -62,7 +62,8 @@ public class SimpleCalc {
 
     private static String parsLine2(String scan, Map map) throws ParseException {
 
-         String[] str1 = scan.split(" ");
+        if(scan.length() == 0)  throw new ParseException("Пустая строка", 0);
+        String[] str1 = scan.split(" ");
          if (str1.length != 3)
             throw new ParseException("Expression must have only 3 operands separated with space (e.g. 2 + 4): " + scan, 0);
          if(scan.contains("=")) {
@@ -156,14 +157,15 @@ public class SimpleCalc {
     }
 
     static int calculate(String line) throws CalcException {
-         try {
+         /*try {
                 line = parsLine2(line, map);
                 if(line.contains("=")) return 0;
             }
             catch (ParseException ex) {
                 System.out.println("Неправильная переменная : " + line);
                 throw new CalcException("Expression must contain '+' or '-': " + line);
-            }
+            }*/
+
 
         if (!line.contains("+") && !line.contains("-"))
             throw new CalcException("Expression must contain '+' or '-': " + line);
