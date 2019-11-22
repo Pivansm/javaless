@@ -25,11 +25,11 @@ import java.util.*;
  */
 public class SimpleCalc {
 
-    private static Map<String, Integer> map;
+    private static Map<String, Integer> map = new HashMap<>();
 
     public static void main(String[] args) {
 
-        map = new HashMap<>();
+        //map = new HashMap<>();
         Scanner scanner = new Scanner(System.in);
 
         while (true) {
