@@ -39,7 +39,7 @@ public class SimpleCalc {
             if ("exit".equals(line))
                 break;
 
-            try {
+            /*try {
                 line = parsLine2(line, map);
                 if(line.contains("=")) continue;
             }
@@ -48,7 +48,7 @@ public class SimpleCalc {
                 System.out.println("Неправильная переменная : " + line);
                 ex.printStackTrace();
                 continue;
-            }
+            }*/
 
             try {
                 System.out.println("Answer is: " + calculate(line));
@@ -165,7 +165,11 @@ public class SimpleCalc {
                 System.out.println("Неправильная переменная : " + line);
                 throw new CalcException("Expression must contain '+' or '-': " + line);
             }*/
-
+        //if(line.contains("=")) throw new CalcException("Expression must contain '+' or '-': " + line);
+        if(line.matches("^([a-zA-Z])+\\d*\\s*=+\\s*-*\\d+$")) {
+            String[] str2 = line.split(" ");
+            line = str2[2] + " " + "+" + " " + str2[2];
+        }
 
         if (!line.contains("+") && !line.contains("-"))
             throw new CalcException("Expression must contain '+' or '-': " + line);
