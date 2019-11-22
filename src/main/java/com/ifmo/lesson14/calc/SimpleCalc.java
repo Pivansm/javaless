@@ -60,13 +60,14 @@ public class SimpleCalc {
         }
     }
 
-    /*private static String parsLine2(String scan, Map map) throws ParseException {
+    private static String parsLine2(String scan, Map map) throws ParseException {
 
+        if(scan.contains("=")) {
             String[] str1 = scan.split(" ");
             try {
                 int param = Integer.parseInt(str1[0]);
                 System.out.print("Параметр не должен быть целым числом!");
-                continue;
+                throw new ParseException("Параметр не должен быть целым числом! " + scan, 0);
 
             } catch (NumberFormatException ex)
             {
@@ -75,18 +76,18 @@ public class SimpleCalc {
 
             map.put(str1[0], Integer.parseInt(str1[2]));
             System.out.println("Answer is: " + str1[2]);
-
-            continue;
+            return scan;
         }
         else
         {
-            String[] str2 = line.split(" ");
+            String[] str2 = scan.split(" ");
             if(map.containsKey(str2[0])) str2[0] = map.get(str2[0]).toString();
             if(map.containsKey(str2[2])) str2[2] = map.get(str2[2]).toString();
-            line = str2[0] + " " + str2[1] + " " + str2[2];
+            scan = str2[0] + " " + str2[1] + " " + str2[2];
         }
 
-    }*/
+        return scan;
+    }
 
     private static String parsLine(String scan, Map map) throws ParseException
     {
@@ -103,7 +104,7 @@ public class SimpleCalc {
              if(m.find()) {
 
                  try {
-                     oui = Integer.parseInt(operands[2].replace(" ", ""));
+                     oui = Integer.parseInt(operands[2]);
                  }
                  catch (Exception e)
                  {
@@ -111,7 +112,7 @@ public class SimpleCalc {
                      throw new ParseException("Неверное значение в строке : '" + scan + "'", 0);
                  }
 
-                 map.put(operands[0].replace(" ", ""), oui);
+                 map.put(operands[0], oui);
                  System.out.println("Answer is: " + oui);
                  return scan;
              }
@@ -149,7 +150,7 @@ public class SimpleCalc {
 
     static int calculate(String line) throws CalcException {
          try {
-                line = parsLine(line, map);
+                line = parsLine2(line, map);
                 if(line.contains("=")) return 0;
             }
             catch (ParseException ex) {
