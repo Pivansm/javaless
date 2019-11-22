@@ -62,9 +62,11 @@ public class SimpleCalc {
 
     private static String parsLine2(String scan, Map map) throws ParseException {
 
-        if(scan.contains("=")) {
-            String[] str1 = scan.split(" ");
-            try {
+         String[] str1 = scan.split(" ");
+         if (str1.length != 3)
+            throw new ParseException("Expression must have only 3 operands separated with space (e.g. 2 + 4): " + scan, 0);
+         if(scan.contains("=")) {
+             try {
                 int param = Integer.parseInt(str1[0]);
                 System.out.print("Параметр не должен быть целым числом!");
                 throw new ParseException("Параметр не должен быть целым числом! " + scan, 0);
@@ -73,17 +75,15 @@ public class SimpleCalc {
             {
                  System.out.print("");
             }
-
             map.put(str1[0], Integer.parseInt(str1[2]));
             System.out.println("Answer is: " + str1[2]);
             return scan;
         }
         else
         {
-            String[] str2 = scan.split(" ");
-            if(map.containsKey(str2[0])) str2[0] = map.get(str2[0]).toString();
-            if(map.containsKey(str2[2])) str2[2] = map.get(str2[2]).toString();
-            scan = str2[0] + " " + str2[1] + " " + str2[2];
+            if(map.containsKey(str1[0])) str1[0] = map.get(str1[0]).toString();
+            if(map.containsKey(str1[2])) str1[2] = map.get(str1[2]).toString();
+            scan = str1[0] + " " + str1[1] + " " + str1[2];
         }
 
         return scan;
