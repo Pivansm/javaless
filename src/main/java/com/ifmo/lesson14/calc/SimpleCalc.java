@@ -168,9 +168,15 @@ public class SimpleCalc {
                 throw new CalcException("Expression must contain '+' or '-': " + line);
             }*/
         //if(line.contains("=")) throw new CalcException("Expression must contain '+' or '-': " + line);
-        if(line.matches("^([a-zA-Z])+\\d*\\s*=+\\s*-*\\d+$")) {
+        if(line.matches("^([a-zA-Z])+\\d*\\s*=\\s*-*\\d+$")) {
             String[] str2 = line.split(" ");
-            map.put(str2[0], Integer.parseInt(str2[2]));
+            try {
+                map.put(str2[0], Integer.parseInt(str2[2]));
+            }
+            catch (Exception ex)
+            {
+                throw new CalcException("Нет переменной: '" +  line + "'");
+            }
             line = "0" + " " + "+" + " " + str2[2];
         }
         if(line.matches("^([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*\\d+$|^([a-zA-Z])+\\d*\\s*(\\+|-)+\\s*([a-zA-Z])+\\d*$")) {
@@ -178,6 +184,11 @@ public class SimpleCalc {
             if(map.containsKey(str2[0])) str2[0] = map.get(str2[0]).toString();
             if(map.containsKey(str2[2])) str2[2] = map.get(str2[2]).toString();
             line =  str2[0] + " " + str2[1] + " " + str2[2];
+            Pattern pattern = Pattern.compile("([a-zA-Z])+");
+            Matcher matcher = pattern.matcher(line);
+            if(matcher.find()) {
+                throw new CalcException("Нет переменной: '" + matcher.group() + "'");
+            }
         }
 
 
