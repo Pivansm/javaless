@@ -168,7 +168,7 @@ public class SimpleCalc {
         //if(line.contains("=")) throw new CalcException("Expression must contain '+' or '-': " + line);
         if(line.matches("^([a-zA-Z])+\\d*\\s*=+\\s*-*\\d+$")) {
             String[] str2 = line.split(" ");
-            line = str2[2] + " " + "+" + " " + str2[2];
+            line = "0" + " " + "+" + " " + str2[2];
         }
 
         if (!line.contains("+") && !line.contains("-"))
