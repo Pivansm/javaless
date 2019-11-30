@@ -1,6 +1,7 @@
 package com.ifmo.lesson18;
 
 import java.io.FilterOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 
 /**
@@ -17,8 +18,24 @@ public class CryptoOutputStream extends FilterOutputStream {
      * @param out Поток вывода.
      * @param key Ключ шифрования.
      */
-
+    private byte[] key;
     public CryptoOutputStream(OutputStream out, byte[] key) {
         super(out);
+        this.key = key;
     }
+
+    public void write(byte[] b, int offset, int len) throws IOException {
+
+        for(int i = offset, j = 0; i < offset + len; i++, j++)
+        {
+            if (j == key.length -1)
+                j = 0;
+            b[i] = (byte) (b[i] ^ key[j]);
+        }
+
+        super.write(b, offset, len);
+    }
+
+
+
 }

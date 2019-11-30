@@ -31,9 +31,35 @@ public class WebToolBar extends JToolBar implements HyperlinkListener {
                 }
             }
         });
+
+        backButton = new JButton();
+        backButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                URL url = webBrowserPane.back();
+                urlTextField.setText(url.toString());
+            }
+        });
+
+        forwardButton = new JButton();
+        forwardButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                URL url = webBrowserPane.forward();
+                urlTextField.setText(url.toString());
+            }
+        });
+
+        add(backButton);
+        add(forwardButton);
+        add(urlTextField);
     }
 
     public void hyperlinkUpdate(HyperlinkEvent event) {
-
+        if(event.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
+            URL url = event.getURL();
+            webBrowserPane.goToURL(url);
+            urlTextField.setText(url.toString());
+        }
     }
 }

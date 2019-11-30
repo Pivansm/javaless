@@ -18,7 +18,7 @@ public class CryptoInputStream extends FilterInputStream {
      * @param in Поток ввода.
      * @param key Ключ шифрования.
      */
-    String stringKey;
+
     private byte[] key;
     public CryptoInputStream(InputStream in, byte[] key) {
         super(in);
