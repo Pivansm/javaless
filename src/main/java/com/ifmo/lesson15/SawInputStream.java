@@ -22,6 +22,7 @@ public class SawInputStream extends InputStream {
     @Override
     public int read() throws IOException {
         // TODO implement
+        if(length <= 0 ) return -1;
 
         int result = readFile();
 

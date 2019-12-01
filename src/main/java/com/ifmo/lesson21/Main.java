@@ -38,21 +38,29 @@ public class Main {
 
         int countLs = words.size() / i1;
 
-        //List<Thread1> thread = new ArrayList<>();
+        List<Thread1> thread = new ArrayList<>();
         int col = 0;
         for (int i = 0; i < i1; i++) {
 
             List<String> partWord = new ArrayList<>(words.subList(col, countLs + col));
             col += countLs;
-            //thread.add(new Thread1(words));
+            thread.add(new Thread1(partWord));
 
-            Thread thread1 = new Thread(new Thread1(partWord));
-            thread1.setName("W-" + i);
-            thread1.start();
+            //Thread thread1 = new Thread(new Thread1(partWord));
+            //thread1.setName("W-" + i);
+            //thread1.start();
 
         }
 
-        Thread.currentThread().join(1000);
+        // Запускаем потоки
+        for (Thread1 adder : thread)
+            adder.start();
+
+        // Ждем завершения выполнения
+        for (Thread1 adder : thread)
+            adder.join();
+
+        //Thread.currentThread().join(1000);
         System.out.println(map);
     }
 
@@ -82,7 +90,7 @@ public class Main {
         }
     }
 
-    public static class Thread1 implements Runnable {
+    public static class Thread1 extends Thread {
         List<String> words;
 
         public Thread1(List<String> words) {
@@ -91,10 +99,8 @@ public class Main {
 
         @Override
         public void run() {
-
             synchronized(object) {
                 System.out.printf("I've got! (%s)\n", Thread.currentThread().getName());
-
                 top10Words(words);
             }
 
