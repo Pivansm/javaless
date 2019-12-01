@@ -9,27 +9,19 @@ public class Pizza {
 
     public static class Builder {
 
-        private String dougn;
-        private String cheese;
+        private final String dougn;
+        private final String cheese;
 
         private int iatchug = 0;
         private int tomatoes = 0;
         private int pepperoni = 0;
 
-        public Builder() {
-
+        public Builder(String dougn, String cheese) {
+            this.dougn = dougn;
+            this.cheese = cheese;
         }
 
-        public Builder dougn(String val) {
-            dougn = val;
-            return this;
-        }
-        public Builder cheese(String val) {
-            cheese = val;
-            return this;
-        }
-
-        public Builder iatchug(int val) {
+         public Builder iatchug(int val) {
             iatchug = val;
             return this;
         }
@@ -61,6 +53,6 @@ public class Pizza {
 
     @Override
     public String toString() {
-        return "Pizza [Cheesy=" + cheese + ", Tomato=" + tomatoes + ", Pepperoni=" + pepperoni + "]";
+        return "Pizza [" + dougn + " " + cheese + ", Tomato=" + tomatoes + ", Pepperoni=" + pepperoni + "]";
     }
 }

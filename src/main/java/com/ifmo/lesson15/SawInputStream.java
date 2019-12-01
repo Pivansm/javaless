@@ -1,7 +1,6 @@
 package com.ifmo.lesson15;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 
 /**
  * Реализация входящего потока, котрая генерирует данные в виде пилы
@@ -17,23 +16,46 @@ public class SawInputStream extends InputStream {
     public SawInputStream(int amplitude, long length) {
         this.amplitude = amplitude;
         this.length = length;
+        writeFile(0);
     }
 
     @Override
     public int read() throws IOException {
         // TODO implement
 
+        int result = readFile();
 
-        for(int i = 0; i<length; i++)
-        {
-            byte[] buf = new byte[amplitude*2];
-            for(int j = 0; j < amplitude; j++)
-            {
-                //
+        if(result >= amplitude)
+            result = 0;
+        writeFile(result+1);
+
+        return result;
+    }
+
+    public void writeFile(int i) {
+        File fl = new File("wapTmp.txt");
+
+            try (OutputStream out = new FileOutputStream(fl)) {
+                out.write(i);
+
+            } catch (IOException e) {
+                e.printStackTrace();
             }
 
+    }
 
+    public int readFile() throws FileNotFoundException {
+        File fl = new File("wapTmp.txt");
+        int result = 0;
+        if (fl.exists()) {
+            try (InputStream in = new FileInputStream(fl)) {
+                result = in.read();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
-        return 0;
+
+        return result;
     }
 }
