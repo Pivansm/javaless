@@ -99,7 +99,7 @@ public class Main {
 
         @Override
         public void run() {
-            synchronized(object) {
+            synchronized(this) {
                 System.out.printf("I've got! (%s)\n", Thread.currentThread().getName());
                 top10Words(words);
             }
