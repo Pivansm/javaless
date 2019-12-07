@@ -20,6 +20,7 @@ public class RandomInputStream extends InputStream {
     @Override
     public int read() throws IOException {
         // TODO implement
+        if(random == null) return -1;
         if(length <= 0 ) return -1;
         int result = readFile();
 
