@@ -80,20 +80,22 @@ public class Bank {
 
         //Генерация User
         for (int i = 0; i < 100; i++) {
-            Bank.User user = new Bank.User(rnd.nextInt(i), NAME.get(rnd.nextInt(NAME.size())));
-            Bank.Account account = new Bank.Account(rnd.nextInt(i), user.id, rnd.nextInt(i));
-            bank.users.put((long)rnd.nextInt(i), user);
+
+            Bank.User user = new Bank.User(rnd.nextInt(100), NAME.get(rnd.nextInt(NAME.size())));
+            Bank.Account account = new Bank.Account(rnd.nextInt(100), user.id, rnd.nextInt(100));
+            bank.users.put((long)rnd.nextInt(100), user);
             bank.accounts.add(account);
         }
 
 
         for(int i = 0; i < 100; i++) {
-            Bank.Account accountFrom = bank.accounts.get(i);
-            Bank.Account accountTo = bank.accounts.get(i+1);
-
+            Bank.Account accountFrom = bank.accounts.get(rnd.nextInt(100));
+            Bank.Account accountTo = bank.accounts.get(rnd.nextInt(100));
             Future future = pool.submit(() -> transferMoney(accountFrom, accountTo, 100));
             futures.add(future);
         }
+
+        System.out.println("");
 
     }
 
