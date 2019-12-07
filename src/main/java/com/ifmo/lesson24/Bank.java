@@ -85,6 +85,7 @@ public class Bank {
             bank.accounts.add(account);
         }
 
+        System.out.println("" + bank.accounts);
 
         List<Future<Bank.Account>> futures = new ArrayList<>(100);
 
@@ -101,7 +102,7 @@ public class Bank {
             counts.add(account);
         }
 
-        System.out.println("" + counts);
+        System.out.println("" + bank.toString());
 
         pool.shutdown();
 
@@ -113,7 +114,9 @@ public class Bank {
         // 1. Атомарно и потокобезопасно перевести деньги в количестве 'amount' со счёта 'from' на счёт 'to'.
         // 2. Создать объект Transaction, содержащий информацию об операции и отправить в очередь
         // потоку Logger, который проснётся и напечатает её.
-        Bank bank = new Bank();
+        //Bank bank = new Bank();
+        from.amount -= amount;
+        to.amount += amount;
         Bank.Transaction tran = new Bank.Transaction(from.id, to.id, amount, true);
 
     }
