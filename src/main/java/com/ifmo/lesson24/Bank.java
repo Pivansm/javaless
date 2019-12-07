@@ -63,7 +63,7 @@ public class Bank {
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws ExecutionException, InterruptedException {
         // 1. Сгенерируйте пользователей и их аккаунты (все идентификаторы должны быть уникальны).
         // 2. Переводите деньги со случайного аккаунта на случайный в 100 потоках.
         // Другими словами, создайте 100 потоков или пул из 100 потоков, в которых
@@ -71,8 +71,6 @@ public class Bank {
 
         //int il = Runtime.getRuntime().availableProcessors();
         ExecutorService pool = Executors.newFixedThreadPool(100);
-
-        List<Future<Map<String, Integer>>> futures = new ArrayList<>(100);
 
         Random rnd = new Random();
         List<String> NAME= List.of("Ivan", "Semen", "John", "Elena", "Alex");
@@ -88,6 +86,8 @@ public class Bank {
         }
 
 
+        List<Future<Bank.Account>> futures = new ArrayList<>(100);
+
         for(int i = 0; i < 100; i++) {
             Bank.Account accountFrom = bank.accounts.get(rnd.nextInt(100));
             Bank.Account accountTo = bank.accounts.get(rnd.nextInt(100));
@@ -95,7 +95,15 @@ public class Bank {
             futures.add(future);
         }
 
-        System.out.println("");
+        List<Bank.Account> counts = new ArrayList<>(100);
+        for (Future<Bank.Account> future : futures) {
+            Bank.Account account = future.get();
+            counts.add(account);
+        }
+
+        System.out.println("" + counts);
+
+        pool.shutdown();
 
     }
 
