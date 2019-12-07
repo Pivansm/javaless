@@ -114,10 +114,20 @@ public class Bank {
         // 1. Атомарно и потокобезопасно перевести деньги в количестве 'amount' со счёта 'from' на счёт 'to'.
         // 2. Создать объект Transaction, содержащий информацию об операции и отправить в очередь
         // потоку Logger, который проснётся и напечатает её.
+        Object object = new Object();
         //Bank bank = new Bank();
-        from.amount -= amount;
-        to.amount += amount;
-        Bank.Transaction tran = new Bank.Transaction(from.id, to.id, amount, true);
+        boolean flag = false;
+        synchronized(object) {
+            if (from.amount - amount < 0)
+                flag = false;
+            else {
+                from.amount -= amount;
+                flag = true;
+            }
+            to.amount += amount;
+        }
+        //Транзакция
+        Bank.Transaction tran = new Bank.Transaction(from.id, to.id, amount, flag);
 
     }
 }
