@@ -87,22 +87,22 @@ public class Bank {
 
         System.out.println("" + bank.accounts);
 
-        List<Future<Bank.Account>> futures = new ArrayList<>(100);
+        List<Future<Bank.Transaction>> futures = new ArrayList<>(100);
 
         for(int i = 0; i < 100; i++) {
             Bank.Account accountFrom = bank.accounts.get(rnd.nextInt(100));
             Bank.Account accountTo = bank.accounts.get(rnd.nextInt(100));
-            Future future = pool.submit(() -> transferMoney(accountFrom, accountTo, 100));
+            Future<Bank.Transaction> future = (Future<Transaction>) pool.submit(() -> transferMoney(accountFrom, accountTo, 100));
             futures.add(future);
         }
 
-        List<Bank.Account> counts = new ArrayList<>(100);
-        for (Future<Bank.Account> future : futures) {
-            Bank.Account account = future.get();
+        List<Bank.Transaction> counts = new ArrayList<>(100);
+        for (Future<Bank.Transaction> future : futures) {
+            Bank.Transaction account = future.get();
             counts.add(account);
         }
 
-        System.out.println("" + bank.toString());
+        //System.out.println("" + counts.toString());
 
         pool.shutdown();
 
@@ -115,7 +115,7 @@ public class Bank {
         // 2. Создать объект Transaction, содержащий информацию об операции и отправить в очередь
         // потоку Logger, который проснётся и напечатает её.
         Object object = new Object();
-        //Bank bank = new Bank();
+        Bank bank = new Bank();
         boolean flag = false;
         synchronized(object) {
             if (from.amount - amount < 0)
@@ -128,6 +128,8 @@ public class Bank {
         }
         //Транзакция
         Bank.Transaction tran = new Bank.Transaction(from.id, to.id, amount, flag);
+
+        System.out.println("" + tran.toString());
 
     }
 }
