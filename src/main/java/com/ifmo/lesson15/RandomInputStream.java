@@ -10,11 +10,13 @@ import java.util.Random;
 public class RandomInputStream extends InputStream {
     private final Random random;
     private final long length;
+    private int index;
 
     public RandomInputStream(Random random, long length) {
         this.random = random;
         this.length = length;
-        writeFile(0);
+        //writeFile(0);
+        index = 0;
     }
 
     @Override
@@ -24,11 +26,12 @@ public class RandomInputStream extends InputStream {
         if(length <= 0 ) return -1;
         int result = readFile();
 
-        if(result >= length)
+        if(index >= length)
             return -1;
-        writeFile(result+1);
+        //writeFile(result + 1);
+        setIndex();
 
-        return random.nextInt((int) length);
+        return random.nextInt(255);
      }
 
     public void writeFile(int i) {
@@ -56,5 +59,13 @@ public class RandomInputStream extends InputStream {
         }
 
         return result;
+    }
+
+    private void setIndex() {
+        index++;
+    }
+
+    private int getIndex() {
+        return index;
     }
 }

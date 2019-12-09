@@ -10,7 +10,7 @@ public class Main {
         //for(int i = 0; i < 100; i++) {
         int r = 0;
         while((r = randomInputStream.read()) > 0) {
-            System.out.print("" + r);
+            System.out.print(" " + r);
         }
 
         //SawInputStream sawInputStream = new SawInputStream(5, 1);
