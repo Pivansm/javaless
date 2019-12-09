@@ -12,11 +12,15 @@ import java.io.*;
 public class SawInputStream extends InputStream {
     private final int amplitude;
     private final long length;
+    private int index;
+    private int count;
 
     public SawInputStream(int amplitude, long length) {
         this.amplitude = amplitude;
         this.length = length;
-        writeFile(0);
+        //writeFile(0);
+        index = 0;
+        count = 0;
     }
 
     @Override
@@ -24,11 +28,16 @@ public class SawInputStream extends InputStream {
         // TODO implement
         if(length <= 0 ) return -1;
 
-        int result = readFile();
+        int result = getCount();
 
-        if(result >= amplitude)
+        if(result >= amplitude) {
             result = 0;
-        writeFile(result+1);
+            count = 0;
+        }
+        setCount();
+
+        if(getIndex() >= length) return -1;
+        setIndex();
 
         return result;
     }
@@ -58,5 +67,21 @@ public class SawInputStream extends InputStream {
         }
 
         return result;
+    }
+
+    private void setIndex() {
+        index++;
+    }
+
+    private int getIndex() {
+        return index;
+    }
+
+    private void setCount() {
+        count++;
+    }
+
+    private int getCount() {
+        return count;
     }
 }

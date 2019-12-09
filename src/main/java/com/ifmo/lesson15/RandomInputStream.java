@@ -24,7 +24,7 @@ public class RandomInputStream extends InputStream {
         // TODO implement
         if(random == null) return -1;
         if(length <= 0 ) return -1;
-        int result = readFile();
+        //int result = readFile();
 
         if(index >= length)
             return -1;
