@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE log SYSTEM "logger.dtd">
+<log>
+<record>
+  <date>2019-12-14T15:43:03.399332500Z</date>
+  <millis>1576338183399</millis>
+  <nanos>332500</nanos>
+  <sequence>0</sequence>
+  <logger>com.ifmo.lesson26.LoggedProgram</logger>
+  <level>INFO</level>
+  <class>com.ifmo.lesson26.LoggedProgram</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Started with arguments: []</message>
+</record>
+<record>
+  <date>2019-12-14T15:43:03.524350100Z</date>
+  <millis>1576338183524</millis>
+  <nanos>350100</nanos>
+  <sequence>1</sequence>
+  <logger>com.ifmo.lesson26.LoggedProgram</logger>
+  <level>SEVERE</level>
+  <class>com.ifmo.lesson26.LoggedProgram</class>
+  <method>main</method>
+  <thread>1</thread>
+  <message>Fatal error: / by zero</message>
+</record>
+</log>
