@@ -8,6 +8,7 @@ import java.util.Random;
 import java.util.concurrent.*;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.*;
 
 public class BankVersion2 {
     private Map<Long, BankVersion2.User> users = new ConcurrentHashMap<>();
@@ -62,9 +63,9 @@ public class BankVersion2 {
         }
     }
 
-    public static Object object = new Object();
     private static List<String> NAME= List.of("Ivan", "Semen", "John", "Elena", "Alex", "Vasya");
     private static Lock lock = new ReentrantLock();
+    //private static Condition condition = lock.newCondition();
     private static boolean flag = false;
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
@@ -73,7 +74,7 @@ public class BankVersion2 {
         // Другими словами, создайте 100 потоков или пул из 100 потоков, в которых
         // выполните перевод вызовом метода transferMoney().
 
-        ExecutorService pool = Executors.newFixedThreadPool(100);
+        ExecutorService pool = Executors.newFixedThreadPool(10);
 
         Random rnd = new Random();
         BankVersion2 bank = new BankVersion2();
@@ -92,9 +93,7 @@ public class BankVersion2 {
         for(int i = 0; i < 100; i++) {
             BankVersion2.Account accountFrom = bank.accounts.get(rnd.nextInt(100));
             BankVersion2.Account accountTo = bank.accounts.get(rnd.nextInt(100));
-            //Future<Bank.Transaction> future = pool.submit(() -> transferMoney(accountFrom, accountTo, 100));
-            Future<BankVersion2.Transaction> future = pool.submit(new BankVersion2.TransLogger(accountFrom, accountTo, rnd.nextInt(1000)));
-            futures.add(future);
+            futures.add(pool.submit(new TransLogger(accountFrom, accountTo, rnd.nextInt(1000))));
         }
         pool.shutdown();
         for (Future<BankVersion2.Transaction> future : futures) {
@@ -109,42 +108,27 @@ public class BankVersion2 {
         // 1. Атомарно и потокобезопасно перевести деньги в количестве 'amount' со счёта 'from' на счёт 'to'.
         // 2. Создать объект Transaction, содержащий информацию об операции и отправить в очередь
         // потоку Logger, который проснётся и напечатает её.
-        Logger logger;
 
-        //boolean flag = false;
-        synchronized(Bank.class) {
-            //synchronized(object) {
-            if (from.amount - amount < 0) {
-                flag = false;
-                System.out.println("Acc from: " + from.id + " acc to " + to.id + " flag  " + flag);
-            }
-            else {
-                from.amount -= amount;
-                to.amount += amount;
-                System.out.println("Acc from: " + from.id + " acc to " + to.id + " amount " + amount);
-                flag = true;
-            }
-
-        }
-
-    }
-
-    private static class Logger implements Runnable {
-        BankVersion2.Transaction tran;
-
-        public Logger(BankVersion2.Transaction tran) {
-            this.tran = tran;
-        }
-
-        @Override
-        public void run() {
-            System.out.println("Logger проснулся " + Thread.currentThread().getName());
             lock.lock();
-            System.out.println("" + tran.toString());
-            lock.unlock();
+            try
+            {
+                if (from.amount < amount) {
+                flag = false;
+                System.out.println("Acc from: " + from.id + " - acc to " + to.id + " flag  " + flag);
+                }
+                else {
+                    from.amount -= amount;
+                    to.amount += amount;
+                    System.out.println("Acc from: " + from.id + " -> acc to " + to.id + " amount " + amount);
+                    flag = true;
+                }
+            }
+            finally {
+                lock.unlock();
+            }
 
-        }
     }
+
 
     private static class TransLogger implements Callable<BankVersion2.Transaction> {
         BankVersion2.Account from;
@@ -160,9 +144,11 @@ public class BankVersion2 {
 
         @Override
         public BankVersion2.Transaction call() throws Exception {
-
+            //System.out.println("--" + Thread.currentThread().getName());
             transferMoney(from, to, amount);
             BankVersion2.Transaction tran = new BankVersion2.Transaction(from.id, to.id, amount, flag);
+            TimeUnit.MILLISECONDS.sleep(100);
+            System.out.println("--" + from.id + " " + to.id + " " + amount);
             return tran;
         }
     }

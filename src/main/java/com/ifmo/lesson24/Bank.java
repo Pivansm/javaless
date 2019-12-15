@@ -1,7 +1,6 @@
 package com.ifmo.lesson24;
 
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -64,9 +63,10 @@ public class Bank {
 
     public static Object object = new Object();
     private static List<String> NAME= List.of("Ivan", "Semen", "John", "Elena", "Alex", "Vasya");
-    //private static ExecutorService pool = Executors.newFixedThreadPool(1);
     //private static ExecutorService pool = Executors.newSingleThreadExecutor();
-    private static Lock lock = new ReentrantLock();
+    private static Lock lockLogger = new ReentrantLock();
+    private static Lock lockTransfer = new ReentrantLock();
+    private static Condition condition = lockTransfer.newCondition();
     private static boolean flag = false;
 
     public static void main(String[] args) throws ExecutionException, InterruptedException {
@@ -75,7 +75,7 @@ public class Bank {
         // Другими словами, создайте 100 потоков или пул из 100 потоков, в которых
         // выполните перевод вызовом метода transferMoney().
 
-        ExecutorService pool = Executors.newFixedThreadPool(8);
+        ExecutorService pool = Executors.newFixedThreadPool(100);
 
         Random rnd = new Random();
         Bank bank = new Bank();
@@ -96,56 +96,55 @@ public class Bank {
                 System.out.println("--" + Thread.currentThread().getName());
                 Account accountFrom = bank.accounts.get(rnd.nextInt(100));
                 Account accountTo = bank.accounts.get(rnd.nextInt(100));
-                transferMoney(accountFrom, accountTo, rnd.nextInt(1000));
-              });
+                try {
+                    transferMoney(accountFrom, accountTo, rnd.nextInt(1000));
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            });
         }
 
-        /*List<Future<Bank.Transaction>> futures = new ArrayList<>(100);
-        for(int i = 0; i < 100; i++) {
-            Bank.Account accountFrom = bank.accounts.get(rnd.nextInt(100));
-            Bank.Account accountTo = bank.accounts.get(rnd.nextInt(100));
-            Future<Bank.Transaction> future = pool.submit(new TransLogger(accountFrom, accountTo, rnd.nextInt(1000)));
-            futures.add(future);
-        }
-
-        for (Future<Bank.Transaction> future : futures) {
-            Bank.Transaction account = future.get();
-            System.out.println("" + account.toString());
-        }*/
-
-        //System.out.println("" + counts.toString());
         pool.shutdown();
     }
 
     // TODO Самая главная часть работы!
-    public static void transferMoney(Account from, Account to, long amount) {
+    public static void transferMoney(Account from, Account to, long amount) throws InterruptedException {
         // 1. Атомарно и потокобезопасно перевести деньги в количестве 'amount' со счёта 'from' на счёт 'to'.
         // 2. Создать объект Transaction, содержащий информацию об операции и отправить в очередь
         // потоку Logger, который проснётся и напечатает её.
-        Logger logger;
 
-        //boolean flag = false;
-        //synchronized(Bank.Account.class) {
-        synchronized(Bank.class) {
-        //synchronized(object) {
-            if (from.amount - amount < 0) {
+        lockTransfer.lock();
+        try {
+
+             Logger logger;
+             //condition.await();
+             if (from.amount < amount) {
+                 System.out.println("Acc from: " + from.id + " acc to " + to.id + " flag  " + flag);
                 flag = false;
-                System.out.println("Acc from: " + from.id + " acc to " + to.id + " flag  " + flag);
-            }
-            else {
+            } else {
+                //condition.await();
                 from.amount -= amount;
                 to.amount += amount;
                 System.out.println("Acc from: " + from.id + " acc to " + to.id + " amount " + amount);
                 flag = true;
+                condition.signalAll();
             }
 
             //Транзакция
-            lock.lock();
-              Bank.Transaction tran = new Bank.Transaction(from.id, to.id, amount, flag);
-              logger = new Logger(tran);
-              new Thread(logger, "logger").start();
-            lock.unlock();
-         }
+            lockLogger.lock();
+            try {
+                Bank.Transaction tran = new Bank.Transaction(from.id, to.id, amount, flag);
+                logger = new Logger(tran);
+                new Thread(logger, "logger").start();
+            } finally {
+                lockLogger.unlock();
+            }
+
+            //condition.signalAll();
+        }
+        finally {
+            lockTransfer.unlock();
+        }
 
     }
 
@@ -159,32 +158,15 @@ public class Bank {
         @Override
         public void run() {
             System.out.println("Logger проснулся " + Thread.currentThread().getName());
-              lock.lock();
+            lockLogger.lock();
+              try {
                   System.out.println("" + tran.toString());
-              lock.unlock();
+              }
+              finally {
+                  lockLogger.unlock();
+              }
 
         }
     }
 
-    private static class TransLogger implements Callable<Bank.Transaction> {
-        //private boolean flag;
-        Account from;
-        Account to;
-        long amount;
-
-        public TransLogger(Account from, Account to, long amount) {
-            this.from = from;
-            this.to = to;
-            this.amount = amount;
-            flag = false;
-        }
-
-        @Override
-        public Transaction call() throws Exception {
-
-            transferMoney(from, to, amount);
-            Bank.Transaction tran = new Bank.Transaction(from.id, to.id, amount, flag);
-            return tran;
-        }
-    }
 }
