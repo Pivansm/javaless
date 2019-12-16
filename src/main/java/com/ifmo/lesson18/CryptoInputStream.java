@@ -20,14 +20,22 @@ public class CryptoInputStream extends FilterInputStream {
      */
 
     private byte[] key;
+    private int index;
+
     public CryptoInputStream(InputStream in, byte[] key) {
         super(in);
         this.key = key;
+        index = 0;
     }
 
     public int read() throws IOException {
-        int c = in.read();
-        return (c == -1) ? c : c ^ (int) key[0];
+        int result = in.read();
+        if(result == -1) return result;
+        if(index == key.length -1)
+            index = 0;
+        result = result ^ (int) key[index];
+        setIndex();
+        return result;
     }
 
     public int read(byte[] b) throws IOException {
@@ -53,5 +61,9 @@ public class CryptoInputStream extends FilterInputStream {
             b[i] = (byte) (b[i] ^ key[j]);
         }
         return result;
+    }
+
+    private void setIndex() {
+        index++;
     }
 }
