@@ -30,6 +30,19 @@ public class CryptoInputStream extends FilterInputStream {
         return (c == -1) ? c : c ^ (int) key[0];
     }
 
+    public int read(byte[] b) throws IOException {
+        int result = in.read(b);
+
+        for(int i = 0, j = 0; i < result; i++, j++)
+        {
+            if (j == key.length -1)
+                j = 0;
+            b[i] = (byte) (b[i] ^ key[j]);
+        }
+
+        return result;
+    }
+
     public int read(byte[] b, int offset, int len) throws IOException {
         int result = in.read(b, offset, len);
 
