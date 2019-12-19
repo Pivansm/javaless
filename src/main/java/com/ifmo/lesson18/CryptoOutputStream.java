@@ -33,7 +33,7 @@ public class CryptoOutputStream extends FilterOutputStream {
             b[i] = (byte) (b[i] ^ key[j]);
         }
 
-        super.write(b);
+        out.write(b);
     }
 
     public void write(byte[] b, int offset, int len) throws IOException {
@@ -45,7 +45,7 @@ public class CryptoOutputStream extends FilterOutputStream {
             b[i] = (byte) (b[i] ^ key[j]);
         }
 
-        super.write(b, offset, len);
+        out.write(b, offset, len);
     }
 
 

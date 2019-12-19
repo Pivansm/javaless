@@ -57,7 +57,7 @@ public class Main {
             e.printStackTrace();
         }*/
 
-        try(InputStream in = new FileInputStream(src)) {
+        try(InputStream in = new FileInputStream(dst)) {
 
             byte[] keyPass = "hello".getBytes();
             CryptoInputStream cryptoInputStream = new CryptoInputStream(in, keyPass);
