@@ -42,14 +42,14 @@ public class Main {
             CryptoOutputStream cryptoOutputStream = new CryptoOutputStream(out, keyPass);
 
             //try (ByteArrayOutputStream bout = new ByteArrayOutputStream()) {
-                byte[] buf = new byte[1024];
+                byte[] buf = new byte[1];
                 int len;
-                //while ((len = in.read(buf)) != -1) {
-                while ((len = in.read()) != -1) {
+                while ((len = in.read(buf)) != -1) {
+                //while ((len = in.read()) != -1) {
                     //bout.write(buf, 0, len);
-                    //cryptoOutputStream.write(buf, 0, len);
+                    cryptoOutputStream.write(buf, 0, len);
                     //cryptoOutputStream.write(buf);
-                    cryptoOutputStream.write((byte)len);
+                    //cryptoOutputStream.write((byte)len);
                 }
                 //cryptoOutputStream.write(bout.toByteArray());
                 //cryptoOutputStream.write(bout.toByteArray());

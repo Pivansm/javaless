@@ -54,11 +54,12 @@ public class CryptoOutputStream extends FilterOutputStream {
     @Override
     public void write(byte[] b, int offset, int len) throws IOException {
 
-        for(int i = offset, j = 0; i < offset + len; i++, j++)
+        for(int i = 0; i < len; i++)
         {
-            if (j == key.length -1)
-                j = 0;
-            b[i] = (byte) (b[i] ^ key[j]);
+            if(index == key.length -1)
+                index = 0;
+            b[offset +i] = (byte) (b[i] ^ key[index]);
+            setIndex();
         }
 
         out.write(b, offset, len);
