@@ -28,7 +28,7 @@ public class CryptoInputStream extends FilterInputStream {
         index = 0;
     }
 
-    public int read() throws IOException {
+    /*public int read() throws IOException {
         int result = in.read();
         if(result == -1) return result;
         if(index == key.length -1)
@@ -36,9 +36,22 @@ public class CryptoInputStream extends FilterInputStream {
         result = result ^ (int) key[index];
         setIndex();
         return result;
+    }*/
+
+    @Override
+    public int read() throws IOException {
+        byte result = (byte) super.read();
+        //if(result == -1) return result;
+
+        if(index == key.length -1)
+            index = 0;
+        byte newC = (byte) (result ^ key[index]);
+        setIndex();
+        return result == -1 ? result : newC;
     }
 
-    public int read(byte[] b) throws IOException {
+
+    /*public int read(byte[] b) throws IOException {
         int result = in.read(b);
         if(result == -1) return -1;
 
@@ -50,11 +63,11 @@ public class CryptoInputStream extends FilterInputStream {
         }
 
         return result;
-    }
+    }*/
 
     public int read(byte[] b, int offset, int len) throws IOException {
 
-        int result = in.read(b, offset, len);
+        int result = super.read(b, offset, len);
 
         if (result == -1) return -1;
 
@@ -67,6 +80,20 @@ public class CryptoInputStream extends FilterInputStream {
         }
         return result;
     }
+
+    /*public int read(byte[] b, int offset, int len) throws IOException {
+
+        for(int i = 0; i < b.length; i++)
+        {
+            if(index == key.length -1)
+                index = 0;
+            b[i] = (byte) (b[i] ^ key[index]);
+            setIndex();
+        }
+
+        return super.read(b, offset, len);
+    }*/
+
 
     private void setIndex() {
         index++;

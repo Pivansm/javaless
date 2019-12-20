@@ -66,8 +66,8 @@ public class Main {
             byte[] buf = new byte[24];
             int len = 0;
             int countByte = 0;
-            while ((len = cryptoInputStream.read(buf)) != -1) {
-            //while ((len = cryptoInputStream.read(buf, 4, buf.length - 4)) > 0) {
+            //while ((len = cryptoInputStream.read(buf)) != -1) {
+            while ((len = cryptoInputStream.read(buf, 4, buf.length - 4)) > 0) {
             //while ((len = cryptoInputStream.read()) != -1) {
                 //bout.write(buf, 0, len);
                 //cryptoOutputStream.write(buf, 0, len);
