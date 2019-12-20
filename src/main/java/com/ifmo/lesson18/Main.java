@@ -36,7 +36,7 @@ public class Main {
 
         //encrypt(src, dst, key);
 
-        /*try(InputStream in = new FileInputStream(src); OutputStream out = new FileOutputStream(dst)) {
+        try(InputStream in = new FileInputStream(src); OutputStream out = new FileOutputStream(dst)) {
 
             byte[] keyPass = "hello".getBytes();
             CryptoOutputStream cryptoOutputStream = new CryptoOutputStream(out, keyPass);
@@ -44,41 +44,46 @@ public class Main {
             //try (ByteArrayOutputStream bout = new ByteArrayOutputStream()) {
                 byte[] buf = new byte[1024];
                 int len;
-                while ((len = in.read(buf)) != -1) {
+                //while ((len = in.read(buf)) != -1) {
+                while ((len = in.read()) != -1) {
                     //bout.write(buf, 0, len);
-                    cryptoOutputStream.write(buf, 0, len);
+                    //cryptoOutputStream.write(buf, 0, len);
                     //cryptoOutputStream.write(buf);
+                    cryptoOutputStream.write((byte)len);
                 }
                 //cryptoOutputStream.write(bout.toByteArray());
                 //cryptoOutputStream.write(bout.toByteArray());
             //}
 
+            cryptoOutputStream.close();
+
         } catch (IOException e) {
             e.printStackTrace();
-        }*/
+        }
 
+        /////////
         try(InputStream in = new FileInputStream(dst)) {
 
             byte[] keyPass = "hello".getBytes();
             CryptoInputStream cryptoInputStream = new CryptoInputStream(in, keyPass);
 
             //try (ByteArrayOutputStream bout = new ByteArrayOutputStream()) {
-            byte[] buf = new byte[24];
+            byte[] buf = new byte[4];
             int len = 0;
             int countByte = 0;
-            //while ((len = cryptoInputStream.read(buf)) != -1) {
-            while ((len = cryptoInputStream.read(buf, 4, buf.length - 4)) > 0) {
+            while ((len = cryptoInputStream.read(buf)) != -1) {
+            //while ((len = cryptoInputStream.read(buf, 0, buf.length)) > 0) {
             //while ((len = cryptoInputStream.read()) != -1) {
                 //bout.write(buf, 0, len);
                 //cryptoOutputStream.write(buf, 0, len);
                 //System.out.println("" + Arrays.toString(buf));
                 String s = new String(buf);
-                System.out.println("" +s);
+                System.out.print("" +s);
                 //System.out.print("" + (char) len);
                 countByte += len;
             }
 
-            System.out.println("Всего байт: " + countByte);
+            System.out.println("\nВсего байт: " + countByte);
             //cryptoOutputStream.write(bout.toByteArray());
             //cryptoOutputStream.write(bout.toByteArray());
             //}

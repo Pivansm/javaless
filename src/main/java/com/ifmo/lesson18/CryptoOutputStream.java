@@ -19,12 +19,27 @@ public class CryptoOutputStream extends FilterOutputStream {
      * @param key Ключ шифрования.
      */
     private byte[] key;
+    private int index;
+
     public CryptoOutputStream(OutputStream out, byte[] key) {
         super(out);
         this.key = key;
+        index = 0;
     }
 
-    public void write(byte[] b) throws IOException {
+
+    @Override
+    public void write(int b) throws IOException {
+
+        if(index == key.length -1)
+            index = 0;
+        byte newC = (byte) (b ^ key[index]);
+        setIndex();
+
+        out.write(newC);
+    }
+
+    /*public void write(byte[] b) throws IOException {
 
         for(int i = 0, j = 0; i < b.length; i++, j++)
         {
@@ -34,8 +49,9 @@ public class CryptoOutputStream extends FilterOutputStream {
         }
 
         out.write(b);
-    }
+    }*/
 
+    @Override
     public void write(byte[] b, int offset, int len) throws IOException {
 
         for(int i = offset, j = 0; i < offset + len; i++, j++)
@@ -48,6 +64,8 @@ public class CryptoOutputStream extends FilterOutputStream {
         out.write(b, offset, len);
     }
 
-
+    private void setIndex() {
+        index++;
+    }
 
 }
