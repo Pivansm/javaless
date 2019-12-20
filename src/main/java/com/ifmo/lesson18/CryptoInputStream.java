@@ -33,12 +33,13 @@ public class CryptoInputStream extends FilterInputStream {
     public int read() throws IOException {
 
         byte result = (byte) super.read();
-        //if(result == -1) return result;
+        if(result == -1) return result;
 
         if(index == key.length -1)
             index = 0;
-        byte newC = (byte) (result ^ key[index]);
+        byte newC = (key.length > 0) ? (byte) (result ^ key[index]) : result;
         setIndex();
+
         return result == -1 ? result : newC;
     }
 
@@ -46,15 +47,16 @@ public class CryptoInputStream extends FilterInputStream {
 
     public int read(byte[] b, int offset, int len) throws IOException {
 
-        int result = -1;
-        if(b.length == 0) { return result; }
+        int result = 255;
+        if(b.length == 0) {
+            result = super.read();
+         }
+        else
+            result = super.read(b, offset, len);
 
-        result = super.read(b, offset, len);
-        //if (result == -1) return -1;
-
-        for(int i = 0; i < b.length; i++)
-        {
-            if(index == key.length -1)
+        if(key.length > 0)
+        for(int i = 0; i < b.length; i++) {
+            if (index == key.length - 1)
                 index = 0;
             b[i] = (byte) (b[i] ^ key[index]);
             setIndex();
